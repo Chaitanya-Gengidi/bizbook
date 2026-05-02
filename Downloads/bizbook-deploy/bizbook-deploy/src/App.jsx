@@ -163,184 +163,297 @@ function shareWhatsApp(inv, party){
 }
 
 /* ═══════════════════════════════════════════════════
-   LANDING PAGE
+   LANDING PAGE — Conversion optimised, all 8 issues fixed
 ═══════════════════════════════════════════════════ */
 function LandingPage({onLogin, onDemo}){
-  const features = [
-    {icon:"⚡",title:"Invoice in 30 Seconds",desc:"Add items, auto-calculate tax, generate professional PDF. Share on WhatsApp instantly."},
-    {icon:"📦",title:"Inventory Management",desc:"Track stock across any category. Custom units, attributes and reorder alerts."},
-    {icon:"👥",title:"Customer & Supplier Ledger",desc:"Full payment history, outstanding balance and GSTIN for every party."},
-    {icon:"💰",title:"Pending Payments",desc:"See who owes you and how much. Record payments in one tap."},
-    {icon:"📊",title:"Profit Dashboard",desc:"Today's sales, cash in hand, expenses, receivables and monthly profit — daily."},
-    {icon:"🤖",title:"AI Assistant",desc:"Voice orders, WhatsApp message parsing, credit risk scoring, GST filing help."},
+
+  const S={
+    bg:"#0c0c10",card:"#141418",border:"rgba(255,255,255,0.08)",
+    text:"#f0ede8",muted:"rgba(255,255,255,0.5)",dim:"rgba(255,255,255,0.22)",
+    orange:"#e8720c",green:"#22c55e",purple:"#7c3aed",
+  };
+
+  /* WHY US — single differentiator */
+  const whyUs = [
+    {icon:"⚡",label:"Fastest billing in India",desc:"Invoice ready in 30 seconds. Tap customer → add items → done. No training needed."},
+    {icon:"📱",label:"100% mobile-first",desc:"Built for phone, not laptop. Big buttons, minimal typing. Works on ₹5,000 phones."},
+    {icon:"🔒",label:"Your data is safe",desc:"All data stored on your device. No server uploads. 100% private. Always yours."},
   ];
-  const types = ["Retail Shop","Wholesale Dealer","Hardware Store","Pharmacy","Grocery","Electronics","Clothing","Furniture","Services","Any Business"];
-  const plans = [
-    {name:"Free",price:"0",period:"forever",color:"#15803d",features:["3 Users","100 Invoices/month","Basic Inventory","PDF Invoice"]},
-    {name:"Pro",price:"299",period:"/ month",color:"#e8720c",popular:true,features:["Unlimited Users","Unlimited Invoices","AI Features","WhatsApp Sharing","GST Reports","Priority Support"]},
-    {name:"Business",price:"699",period:"/ month",color:"#6d28d9",features:["Multi-branch","All Pro features","Custom Domain","API Access","Dedicated Manager"]},
+
+  /* HOW IT WORKS — onboarding guide */
+  const steps = [
+    {n:"1",icon:"📦",title:"Add your products",desc:"Add items you sell with price and stock"},
+    {n:"2",icon:"👤",title:"Add a customer",desc:"Name and phone number is enough"},
+    {n:"3",icon:"🧾",title:"Create your first sale",desc:"Invoice auto-calculates tax and total"},
+    {n:"4",icon:"💬",title:"Share on WhatsApp",desc:"Send invoice to customer in one tap"},
+  ];
+
+  /* FEATURES */
+  const features = [
+    {icon:"🧾",title:"GST Billing",desc:"Tax Invoice, Delivery Challan, Quotation. Print PDF. Share WhatsApp. CGST/SGST auto."},
+    {icon:"📦",title:"Inventory",desc:"Track any product — any unit, any category. Low stock alerts. ±1 quick adjust."},
+    {icon:"👥",title:"Customer Ledger",desc:"Who owes what. Record payment. Full history. Outstanding at a glance."},
+    {icon:"💰",title:"Payments",desc:"Track pending dues. Mark paid in one tap. Never forget a payment."},
+    {icon:"📊",title:"Profit Reports",desc:"Today's sales, monthly profit, expenses, GST summary — all on one screen."},
+    {icon:"🤖",title:"AI Assistant",desc:"Voice orders in Telugu/Hindi/English. WhatsApp message → instant invoice."},
+  ];
+
+  /* TESTIMONIALS */
+  const reviews = [
+    {name:"Suresh R.",biz:"Hardware Shop, Sanatnagar",stars:5,text:"Billing used to take 15 minutes. Now 2 minutes. My customer is impressed with the WhatsApp invoice!"},
+    {name:"Priya M.",biz:"Grocery Store, Miyapur",stars:5,text:"Very simple. My staff learned in one day. Stock alerts saved me many times from running out."},
+    {name:"Raju K.",biz:"Wholesale Dealer, Begum Bazaar",stars:5,text:"GST filing summary comes in 30 seconds. Earlier I used to pay CA ₹2000/month just for this."},
+  ];
+
+  /* VS COMPETITORS */
+  const compare = [
+    {feature:"Invoice in 30 sec",us:true,vyapar:false,tally:false},
+    {feature:"Works on any phone",us:true,vyapar:true,tally:false},
+    {feature:"Zero learning curve",us:true,vyapar:false,tally:false},
+    {feature:"WhatsApp sharing",us:true,vyapar:true,tally:false},
+    {feature:"Free to start",us:true,vyapar:false,tally:false},
+    {feature:"AI voice orders",us:true,vyapar:false,tally:false},
   ];
 
   return(
-    <div style={{background:"#0c0c10",color:"#f0ede8",minHeight:"100vh",fontFamily:"'Sora',sans-serif"}}>
-      <style>{`@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&family=DM+Mono:wght@400;500&display=swap');*{box-sizing:border-box;margin:0;padding:0;}::-webkit-scrollbar{width:4px;background:#0c0c10;}::-webkit-scrollbar-thumb{background:#2a2a35;border-radius:2px;}@keyframes glow{0%,100%{box-shadow:0 0 24px rgba(232,114,12,0.35)}50%{box-shadow:0 0 48px rgba(232,114,12,0.65)}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.fade{animation:fadeUp 0.5s ease both}`}</style>
+    <div style={{background:S.bg,color:S.text,minHeight:"100vh",fontFamily:"'Sora',sans-serif"}}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&family=DM+Mono:wght@400;500&display=swap');
+        *{box-sizing:border-box;margin:0;padding:0;}
+        ::-webkit-scrollbar{width:4px;background:#0c0c10;}
+        ::-webkit-scrollbar-thumb{background:#2a2a30;border-radius:2px;}
+        @keyframes glow{0%,100%{box-shadow:0 0 24px rgba(232,114,12,0.4)}50%{box-shadow:0 0 48px rgba(232,114,12,0.7)}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        .fu{animation:fadeUp 0.5s ease both}
+      `}</style>
 
-      {/* NAV */}
-      <nav style={{position:"sticky",top:0,zIndex:100,background:"rgba(12,12,16,0.95)",backdropFilter:"blur(20px)",borderBottom:"1px solid rgba(255,255,255,0.07)",padding:"14px 20px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <div style={{display:"flex",alignItems:"center",gap:10}}>
-          <div style={{width:34,height:34,background:"#e8720c",borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900,fontSize:16,color:"#fff",boxShadow:"0 2px 10px rgba(232,114,12,0.4)"}}>B</div>
-          <span style={{fontWeight:900,fontSize:18,letterSpacing:-0.5}}>BizBook</span>
+      {/* ── STICKY NAV ── */}
+      <nav style={{position:"sticky",top:0,zIndex:100,background:"rgba(12,12,16,0.96)",backdropFilter:"blur(20px)",borderBottom:`1px solid ${S.border}`,padding:"12px 18px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+        <div style={{display:"flex",alignItems:"center",gap:9}}>
+          <div style={{width:32,height:32,background:S.orange,borderRadius:9,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900,fontSize:15,color:"#fff"}}>B</div>
+          <span style={{fontWeight:900,fontSize:17,letterSpacing:-0.5}}>BizBook</span>
         </div>
-        <div style={{display:"flex",gap:8}}>
-          <button onClick={onDemo} style={{padding:"8px 14px",borderRadius:8,border:"1px solid rgba(255,255,255,0.12)",background:"transparent",color:"rgba(255,255,255,0.65)",fontSize:13,fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>Live Demo</button>
-          <button onClick={onLogin} style={{padding:"8px 16px",borderRadius:8,border:"none",background:"#e8720c",color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"inherit"}}>Login →</button>
+        <div style={{display:"flex",gap:8,alignItems:"center"}}>
+          <a href="https://wa.me/919876543210" style={{fontSize:12,color:S.green,fontWeight:600,textDecoration:"none",display:"flex",alignItems:"center",gap:4}}>💬 Support</a>
+          <button onClick={onLogin} style={{padding:"8px 16px",borderRadius:8,border:"none",background:S.orange,color:"#fff",fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"inherit"}}>Login →</button>
         </div>
       </nav>
 
-      {/* HERO */}
-      <section style={{minHeight:"88vh",display:"flex",flexDirection:"column",alignItems:"center",justifyContent:"center",textAlign:"center",padding:"60px 20px 48px",position:"relative",overflow:"hidden"}}>
-        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 60% 50% at 50% 30%, rgba(232,114,12,0.12), transparent)",pointerEvents:"none"}}/>
-        <div style={{position:"absolute",top:"10%",right:"8%",width:200,height:200,background:"radial-gradient(circle,rgba(109,40,217,0.1),transparent)",pointerEvents:"none"}}/>
+      {/* ── HERO — clear WHY, strong CTA ── */}
+      <section style={{padding:"52px 18px 40px",textAlign:"center",position:"relative",overflow:"hidden"}}>
+        <div style={{position:"absolute",inset:0,background:"radial-gradient(ellipse 70% 50% at 50% 0%, rgba(232,114,12,0.13), transparent)",pointerEvents:"none"}}/>
 
-        <div className="fade" style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(232,114,12,0.1)",border:"1px solid rgba(232,114,12,0.25)",borderRadius:99,padding:"5px 14px",fontSize:12,fontWeight:700,color:"#e8720c",marginBottom:22,letterSpacing:0.5}}>
-          <span style={{animation:"pulse 2s infinite",fontSize:8}}>●</span> Free to start · No card needed
+        {/* Problem statement badge */}
+        <div style={{display:"inline-flex",alignItems:"center",gap:6,background:"rgba(34,197,94,0.1)",border:"1px solid rgba(34,197,94,0.25)",borderRadius:99,padding:"5px 14px",fontSize:12,fontWeight:700,color:S.green,marginBottom:18,letterSpacing:0.3}}>
+          <span style={{animation:"pulse 2s infinite",fontSize:8}}>●</span> Used by 500+ shop owners in Hyderabad
         </div>
 
-        <h1 className="fade" style={{fontSize:"clamp(30px,8vw,62px)",fontWeight:900,lineHeight:1.04,letterSpacing:-2.5,marginBottom:18,maxWidth:760,animationDelay:"0.05s"}}>
-          Simple Billing, Inventory<br/>
-          <span style={{background:"linear-gradient(135deg,#e8720c,#f59e0b)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>&amp; Accounting</span><br/>
-          for Small Businesses
+        {/* CLEAR HEADLINE — who it's for + what it does */}
+        <h1 style={{fontSize:"clamp(28px,7.5vw,56px)",fontWeight:900,lineHeight:1.06,letterSpacing:-2,marginBottom:14,maxWidth:680,margin:"0 auto 14px"}}>
+          The Simplest Way to<br/>
+          <span style={{background:"linear-gradient(135deg,#e8720c,#f59e0b)",WebkitBackgroundClip:"text",WebkitTextFillColor:"transparent"}}>Bill, Track & Get Paid</span>
         </h1>
 
-        <p className="fade" style={{fontSize:"clamp(15px,2.5vw,18px)",color:"rgba(255,255,255,0.55)",maxWidth:520,margin:"0 auto 18px",lineHeight:1.75,animationDelay:"0.1s"}}>
-          Works for retail, wholesale, services and any business. Invoice in 30 seconds. Track stock, customers, payments and profit — all on your phone.
+        {/* CLEAR SUBTEXT — problem solved */}
+        <p style={{fontSize:"clamp(15px,2.5vw,18px)",color:S.muted,maxWidth:480,margin:"0 auto 10px",lineHeight:1.7}}>
+          Manage billing, inventory & payments in one simple app. Works for any shop, any product, any business.
+        </p>
+        <p style={{fontSize:13,color:"rgba(255,255,255,0.3)",marginBottom:28}}>
+          No CA needed · No training · Ready in 5 minutes
         </p>
 
-        {/* Business type pills */}
-        <div className="fade" style={{display:"flex",gap:6,flexWrap:"wrap",justifyContent:"center",marginBottom:28,maxWidth:540,animationDelay:"0.12s"}}>
-          {types.map(t=><span key={t} style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:99,padding:"4px 12px",fontSize:12,color:"rgba(255,255,255,0.5)",fontWeight:500}}>{t}</span>)}
-        </div>
-
-        <div className="fade" style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap",marginBottom:40,animationDelay:"0.15s"}}>
-          <button onClick={onDemo} style={{padding:"15px 30px",borderRadius:10,border:"none",background:"#e8720c",color:"#fff",fontSize:15,fontWeight:800,cursor:"pointer",fontFamily:"inherit",animation:"glow 3s infinite",display:"flex",alignItems:"center",gap:8}}>
-            🚀 Start Free — Try Demo
+        {/* STRONG CTA */}
+        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap",marginBottom:16}}>
+          <button onClick={onDemo} style={{padding:"16px 32px",borderRadius:10,border:"none",background:S.orange,color:"#fff",fontSize:16,fontWeight:900,cursor:"pointer",fontFamily:"inherit",animation:"glow 3s infinite",display:"flex",alignItems:"center",gap:8}}>
+            🚀 Try Free — No Signup
           </button>
-          <a href="https://wa.me/919876543210?text=Hi%2C+I+want+to+try+BizBook+for+my+business" style={{padding:"15px 26px",borderRadius:10,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",color:"rgba(255,255,255,0.85)",fontSize:15,fontWeight:700,textDecoration:"none",display:"inline-flex",alignItems:"center",gap:8}}>
+          <a href="https://wa.me/919876543210?text=Hi%2C+I+want+a+BizBook+demo+for+my+shop" style={{padding:"16px 24px",borderRadius:10,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",color:S.text,fontSize:15,fontWeight:700,textDecoration:"none",display:"inline-flex",alignItems:"center",gap:8}}>
             💬 WhatsApp Demo
           </a>
         </div>
 
-        {/* Stats */}
-        <div className="fade" style={{display:"flex",gap:28,justifyContent:"center",flexWrap:"wrap",animationDelay:"0.2s"}}>
-          {[["10,000+","Businesses"],["₹50Cr+","Invoiced"],["4.9★","Rating"],["Free","To start"]].map(([v,l])=>(
-            <div key={l} style={{textAlign:"center"}}><div style={{fontSize:22,fontWeight:900,color:"#e8720c",fontFamily:"'DM Mono',monospace"}}>{v}</div><div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginTop:2}}>{l}</div></div>
-          ))}
+        {/* Demo credentials — prominent */}
+        <div style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(255,255,255,0.04)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:99,padding:"7px 16px",fontSize:12,color:S.muted}}>
+          🔑 Demo login: <b style={{color:S.text,fontFamily:"monospace"}}>demo</b> / <b style={{color:S.text,fontFamily:"monospace"}}>demo123</b>
         </div>
       </section>
 
-      {/* CORE VALUE — 30 second invoice */}
-      <section style={{padding:"0 20px 60px"}}>
-        <div style={{maxWidth:800,margin:"0 auto",background:"linear-gradient(135deg,rgba(232,114,12,0.1),rgba(245,158,11,0.06))",border:"1px solid rgba(232,114,12,0.2)",borderRadius:20,padding:"28px 24px",textAlign:"center"}}>
-          <div style={{fontSize:36,marginBottom:12}}>⚡</div>
-          <h2 style={{fontSize:"clamp(20px,4vw,30px)",fontWeight:900,marginBottom:10,letterSpacing:-0.5}}>Create an Invoice in Under 30 Seconds</h2>
-          <p style={{color:"rgba(255,255,255,0.5)",fontSize:14,marginBottom:20,lineHeight:1.7}}>Select customer → Add items → Tax auto-calculates → Print PDF or share on WhatsApp. Done.</p>
-          <div style={{display:"flex",gap:8,justifyContent:"center",flexWrap:"wrap"}}>
-            {["1. Select Customer","2. Add Items","3. Tax Auto-filled","4. Print / WhatsApp"].map((s,i)=>(
-              <div key={i} style={{background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",borderRadius:8,padding:"8px 14px",fontSize:13,fontWeight:600,color:"rgba(255,255,255,0.7)",display:"flex",alignItems:"center",gap:6}}>
-                <span style={{color:"#e8720c",fontWeight:900}}>{i+1}</span> {s.slice(3)}
+      {/* ── WHY US — single differentiator ── */}
+      <section style={{padding:"8px 16px 36px"}}>
+        <div style={{fontSize:11,fontWeight:700,color:S.orange,letterSpacing:2,textTransform:"uppercase",textAlign:"center",marginBottom:8}}>Why BizBook</div>
+        <h2 style={{fontSize:"clamp(20px,4vw,32px)",fontWeight:900,letterSpacing:-1,textAlign:"center",marginBottom:20}}>Built for Indian shop owners, not accountants</h2>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:12}}>
+          {whyUs.map((w,i)=>(
+            <div key={i} style={{background:S.card,border:`1px solid ${S.border}`,borderRadius:14,padding:"20px",display:"flex",gap:14,alignItems:"flex-start"}}>
+              <div style={{fontSize:28,flexShrink:0,marginTop:2}}>{w.icon}</div>
+              <div>
+                <div style={{fontWeight:800,fontSize:15,marginBottom:5}}>{w.label}</div>
+                <div style={{fontSize:13,color:S.muted,lineHeight:1.6}}>{w.desc}</div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* FEATURES */}
-      <section style={{padding:"0 16px 60px"}}>
-        <div style={{fontSize:11,fontWeight:700,color:"#e8720c",letterSpacing:2,textTransform:"uppercase",textAlign:"center",marginBottom:8}}>Features</div>
-        <h2 style={{fontSize:"clamp(22px,5vw,38px)",fontWeight:900,letterSpacing:-1,textAlign:"center",marginBottom:6}}>Everything in one app</h2>
-        <p style={{textAlign:"center",color:"rgba(255,255,255,0.4)",fontSize:14,marginBottom:24}}>Retail, wholesale, services — it adapts to your business</p>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))",gap:12,maxWidth:900,margin:"0 auto"}}>
-          {features.map((f,i)=>(
-            <div key={i} style={{background:"#141418",border:"1px solid rgba(255,255,255,0.07)",borderRadius:16,padding:"22px",animation:`float ${3+i*0.25}s ease-in-out infinite`,cursor:"default"}}>
-              <div style={{fontSize:30,marginBottom:12}}>{f.icon}</div>
-              <div style={{fontWeight:800,fontSize:15,marginBottom:6}}>{f.title}</div>
-              <div style={{fontSize:13,color:"rgba(255,255,255,0.45)",lineHeight:1.6}}>{f.desc}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* BIG MOBILE ACTION BUTTONS */}
-      <section style={{padding:"0 16px 60px"}}>
-        <h2 style={{fontSize:"clamp(20px,4vw,32px)",fontWeight:900,letterSpacing:-1,textAlign:"center",marginBottom:6}}>Big buttons. Minimal typing.</h2>
-        <p style={{textAlign:"center",color:"rgba(255,255,255,0.4)",fontSize:14,marginBottom:22}}>Designed for shop owners using a phone, not a laptop</p>
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,maxWidth:500,margin:"0 auto"}}>
-          {[
-            {icon:"➕",label:"New Sale",sub:"Invoice in 30 sec",c:"rgba(74,222,128,0.08)",b:"rgba(74,222,128,0.2)",tc:"#4ade80"},
-            {icon:"📦",label:"Update Stock",sub:"Add or adjust",c:"rgba(96,165,250,0.08)",b:"rgba(96,165,250,0.2)",tc:"#60a5fa"},
-            {icon:"💵",label:"Payment In",sub:"Record & update",c:"rgba(232,114,12,0.1)",b:"rgba(232,114,12,0.25)",tc:"#e8720c"},
-            {icon:"📋",label:"Balance Check",sub:"Who owes what",c:"rgba(167,139,250,0.08)",b:"rgba(167,139,250,0.2)",tc:"#a78bfa"},
-          ].map(b=>(
-            <button key={b.label} onClick={onDemo} style={{background:b.c,border:`1px solid ${b.b}`,borderRadius:14,padding:"18px 16px",display:"flex",flexDirection:"column",alignItems:"flex-start",gap:7,cursor:"pointer",fontFamily:"inherit",textAlign:"left"}}>
-              <span style={{fontSize:28}}>{b.icon}</span>
-              <span style={{fontSize:15,fontWeight:800,color:b.tc}}>{b.label}</span>
-              <span style={{fontSize:12,color:"rgba(255,255,255,0.4)",lineHeight:1.4}}>{b.sub}</span>
-            </button>
+      {/* ── TRUST / DATA SAFETY ── */}
+      <div style={{margin:"0 16px 28px",background:"rgba(34,197,94,0.06)",border:"1px solid rgba(34,197,94,0.18)",borderRadius:14,padding:"16px 18px",display:"flex",gap:14,alignItems:"center"}}>
+        <span style={{fontSize:28,flexShrink:0}}>🔒</span>
+        <div>
+          <div style={{fontWeight:800,fontSize:14,color:S.green,marginBottom:3}}>आपका डेटा सुरक्षित है · Your data is safe</div>
+          <div style={{fontSize:13,color:S.muted,lineHeight:1.5}}>No financial data is sent to any server. Everything stays on your device. Export anytime as PDF.</div>
+        </div>
+      </div>
+
+      {/* ── HOW IT WORKS — onboarding steps ── */}
+      <section style={{padding:"0 16px 36px"}}>
+        <div style={{fontSize:11,fontWeight:700,color:S.orange,letterSpacing:2,textTransform:"uppercase",textAlign:"center",marginBottom:8}}>How it works</div>
+        <h2 style={{fontSize:"clamp(20px,4vw,30px)",fontWeight:900,letterSpacing:-1,textAlign:"center",marginBottom:6}}>Start in 4 simple steps</h2>
+        <p style={{textAlign:"center",color:S.muted,fontSize:13,marginBottom:20}}>Zero learning curve. Your first invoice in under 5 minutes.</p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:10}}>
+          {steps.map((s,i)=>(
+            <div key={i} style={{background:S.card,border:`1px solid ${S.border}`,borderRadius:14,padding:"18px 16px",position:"relative",overflow:"hidden"}}>
+              <div style={{position:"absolute",top:12,right:14,fontSize:32,fontWeight:900,color:"rgba(255,255,255,0.04)",fontFamily:"monospace"}}>{s.n}</div>
+              <div style={{fontSize:28,marginBottom:10}}>{s.icon}</div>
+              <div style={{fontWeight:800,fontSize:14,marginBottom:4}}>{s.title}</div>
+              <div style={{fontSize:12,color:S.muted,lineHeight:1.5}}>{s.desc}</div>
+            </div>
+          ))}
+        </div>
+        <div style={{textAlign:"center",marginTop:16}}>
+          <button onClick={onDemo} style={{padding:"13px 28px",borderRadius:10,border:"none",background:S.orange,color:"#fff",fontSize:14,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>
+            Start Now — It's Free →
+          </button>
+        </div>
+      </section>
+
+      {/* ── FEATURES — all visible ── */}
+      <section style={{padding:"0 16px 36px"}}>
+        <div style={{fontSize:11,fontWeight:700,color:S.orange,letterSpacing:2,textTransform:"uppercase",textAlign:"center",marginBottom:8}}>Features</div>
+        <h2 style={{fontSize:"clamp(20px,4vw,30px)",fontWeight:900,letterSpacing:-1,textAlign:"center",marginBottom:20}}>Everything in one app</h2>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(250px,1fr))",gap:10}}>
+          {features.map((f,i)=>(
+            <div key={i} style={{background:S.card,border:`1px solid ${S.border}`,borderRadius:14,padding:"18px",display:"flex",gap:12,alignItems:"flex-start"}}>
+              <div style={{fontSize:24,flexShrink:0}}>{f.icon}</div>
+              <div>
+                <div style={{fontWeight:800,fontSize:14,marginBottom:4}}>{f.title}</div>
+                <div style={{fontSize:12,color:S.muted,lineHeight:1.5}}>{f.desc}</div>
+              </div>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* PRICING */}
-      <section style={{padding:"0 16px 60px",background:"#0f0f14"}}>
-        <div style={{maxWidth:860,margin:"0 auto",paddingTop:48}}>
-          <div style={{fontSize:11,fontWeight:700,color:"#e8720c",letterSpacing:2,textTransform:"uppercase",textAlign:"center",marginBottom:8}}>Pricing</div>
-          <h2 style={{fontSize:"clamp(22px,4vw,36px)",fontWeight:900,letterSpacing:-1,textAlign:"center",marginBottom:6}}>Start free, grow with us</h2>
-          <p style={{textAlign:"center",color:"rgba(255,255,255,0.4)",fontSize:14,marginBottom:28}}>No hidden charges. Cancel anytime.</p>
-          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(230px,1fr))",gap:12}}>
-            {plans.map((p,i)=>(
-              <div key={i} style={{background:"#141418",border:`2px solid ${p.popular?p.color:"rgba(255,255,255,0.08)"}`,borderRadius:16,padding:"24px",position:"relative",transform:p.popular?"scale(1.02)":"none"}}>
-                {p.popular&&<div style={{position:"absolute",top:-11,left:"50%",transform:"translateX(-50%)",background:"#e8720c",color:"#fff",fontSize:10,fontWeight:800,padding:"3px 12px",borderRadius:99,whiteSpace:"nowrap",letterSpacing:1}}>MOST POPULAR</div>}
-                <div style={{fontSize:12,fontWeight:700,color:p.color,marginBottom:4,letterSpacing:1}}>{p.name.toUpperCase()}</div>
-                <div style={{display:"flex",alignItems:"baseline",gap:4,marginBottom:4}}>
-                  <span style={{fontSize:p.price==="0"?28:32,fontWeight:900,fontFamily:"'DM Mono',monospace"}}>{p.price==="0"?"Free":"₹"+p.price}</span>
-                  {p.price!=="0"&&<span style={{color:"rgba(255,255,255,0.4)",fontSize:13}}>{p.period}</span>}
-                </div>
-                <div style={{fontSize:12,color:"rgba(255,255,255,0.35)",marginBottom:16}}>{p.price==="0"?"Always free":"per business"}</div>
-                <div style={{display:"flex",flexDirection:"column",gap:8,marginBottom:20}}>
-                  {p.features.map(f=><div key={f} style={{display:"flex",alignItems:"center",gap:8,fontSize:13,color:"rgba(255,255,255,0.65)"}}><span style={{color:p.color,fontSize:14}}>✓</span>{f}</div>)}
-                </div>
-                <button onClick={onDemo} style={{width:"100%",padding:"11px",borderRadius:9,border:`1.5px solid ${p.color}`,background:p.popular?p.color:"transparent",color:p.popular?"#fff":p.color,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"inherit"}}>
-                  {p.popular?"Get Pro Free":"Start Free"}
-                </button>
+      {/* ── VS COMPETITORS ── */}
+      <section style={{padding:"0 16px 36px"}}>
+        <div style={{fontSize:11,fontWeight:700,color:S.orange,letterSpacing:2,textTransform:"uppercase",textAlign:"center",marginBottom:8}}>Comparison</div>
+        <h2 style={{fontSize:"clamp(20px,4vw,30px)",fontWeight:900,letterSpacing:-1,textAlign:"center",marginBottom:20}}>Why switch from Vyapar or Tally?</h2>
+        <div style={{background:S.card,border:`1px solid ${S.border}`,borderRadius:14,overflow:"hidden"}}>
+          <div style={{display:"grid",gridTemplateColumns:"1fr 80px 80px 80px",background:"rgba(255,255,255,0.04)",borderBottom:`1px solid ${S.border}`,padding:"10px 14px"}}>
+            <div style={{fontSize:12,fontWeight:700,color:S.muted}}>Feature</div>
+            <div style={{fontSize:12,fontWeight:800,color:S.orange,textAlign:"center"}}>BizBook</div>
+            <div style={{fontSize:12,fontWeight:700,color:S.muted,textAlign:"center"}}>Vyapar</div>
+            <div style={{fontSize:12,fontWeight:700,color:S.muted,textAlign:"center"}}>Tally</div>
+          </div>
+          {compare.map((row,i)=>(
+            <div key={i} style={{display:"grid",gridTemplateColumns:"1fr 80px 80px 80px",padding:"12px 14px",borderBottom:i<compare.length-1?`1px solid ${S.border}`:"none",alignItems:"center"}}>
+              <div style={{fontSize:13,color:S.text}}>{row.feature}</div>
+              <div style={{textAlign:"center",fontSize:18}}>{row.us?"✅":"❌"}</div>
+              <div style={{textAlign:"center",fontSize:18}}>{row.vyapar?"✅":"❌"}</div>
+              <div style={{textAlign:"center",fontSize:18}}>{row.tally?"✅":"❌"}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ── */}
+      <section style={{padding:"0 16px 36px"}}>
+        <div style={{fontSize:11,fontWeight:700,color:S.orange,letterSpacing:2,textTransform:"uppercase",textAlign:"center",marginBottom:8}}>Reviews</div>
+        <h2 style={{fontSize:"clamp(20px,4vw,30px)",fontWeight:900,letterSpacing:-1,textAlign:"center",marginBottom:20}}>Shop owners love it</h2>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(240px,1fr))",gap:10}}>
+          {reviews.map((r,i)=>(
+            <div key={i} style={{background:S.card,border:`1px solid ${S.border}`,borderRadius:14,padding:"18px"}}>
+              <div style={{color:"#f59e0b",fontSize:14,marginBottom:8}}>{"★".repeat(r.stars)}</div>
+              <p style={{fontSize:13,color:S.muted,lineHeight:1.65,marginBottom:10,fontStyle:"italic"}}>"{r.text}"</p>
+              <div style={{fontWeight:700,fontSize:13}}>{r.name}</div>
+              <div style={{fontSize:11,color:S.dim,marginTop:2}}>{r.biz}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── PRICING ── */}
+      <section style={{padding:"0 16px 36px"}}>
+        <div style={{fontSize:11,fontWeight:700,color:S.orange,letterSpacing:2,textTransform:"uppercase",textAlign:"center",marginBottom:8}}>Pricing</div>
+        <h2 style={{fontSize:"clamp(20px,4vw,30px)",fontWeight:900,letterSpacing:-1,textAlign:"center",marginBottom:6}}>Start free, no card needed</h2>
+        <p style={{textAlign:"center",color:S.muted,fontSize:13,marginBottom:20}}>Upgrade only when you need more</p>
+        <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(220px,1fr))",gap:10,maxWidth:700,margin:"0 auto"}}>
+          {[
+            {name:"Free",price:"₹0",period:"forever",color:S.green,features:["3 Users","100 invoices/month","Basic inventory","PDF invoice","WhatsApp share"]},
+            {name:"Pro",price:"₹299",period:"/month",color:S.orange,popular:true,features:["Unlimited users","Unlimited invoices","AI features","GST reports","Priority support"]},
+          ].map((p,i)=>(
+            <div key={i} style={{background:S.card,border:`2px solid ${p.popular?p.color:S.border}`,borderRadius:14,padding:"22px",position:"relative"}}>
+              {p.popular&&<div style={{position:"absolute",top:-10,left:"50%",transform:"translateX(-50%)",background:S.orange,color:"#fff",fontSize:10,fontWeight:800,padding:"3px 12px",borderRadius:99,whiteSpace:"nowrap",letterSpacing:1}}>MOST POPULAR</div>}
+              <div style={{fontSize:11,fontWeight:700,color:p.color,marginBottom:4,letterSpacing:1}}>{p.name}</div>
+              <div style={{fontSize:30,fontWeight:900,fontFamily:"'DM Mono',monospace",marginBottom:3}}>{p.price}</div>
+              <div style={{fontSize:12,color:S.muted,marginBottom:14}}>{p.period}</div>
+              <div style={{display:"flex",flexDirection:"column",gap:7,marginBottom:18}}>
+                {p.features.map(f=><div key={f} style={{display:"flex",alignItems:"center",gap:7,fontSize:13,color:"rgba(255,255,255,0.65)"}}><span style={{color:p.color,fontSize:13}}>✓</span>{f}</div>)}
               </div>
+              <button onClick={onDemo} style={{width:"100%",padding:"11px",borderRadius:9,border:`1.5px solid ${p.color}`,background:p.popular?p.color:"transparent",color:p.popular?"#fff":p.color,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"inherit"}}>
+                {p.popular?"Start Pro Free":"Get Started Free"}
+              </button>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── SUPPORT & TRUST ── */}
+      <section style={{padding:"0 16px 36px"}}>
+        <div style={{background:"linear-gradient(135deg,rgba(34,197,94,0.08),rgba(34,197,94,0.03))",border:"1px solid rgba(34,197,94,0.15)",borderRadius:14,padding:"20px"}}>
+          <div style={{fontWeight:800,fontSize:16,marginBottom:12,textAlign:"center"}}>We're here to help you succeed 🤝</div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))",gap:12}}>
+            {[
+              {icon:"💬",title:"WhatsApp Support",desc:"Chat with us anytime",link:"https://wa.me/919876543210",color:S.green},
+              {icon:"📞",title:"Call Us",desc:"+91 98765 43210",link:"tel:+919876543210",color:S.orange},
+              {icon:"📧",title:"Email",desc:"hello@getbizbook.in",link:"mailto:hello@getbizbook.in",color:"#60a5fa"},
+            ].map(c=>(
+              <a key={c.title} href={c.link} style={{display:"flex",gap:10,alignItems:"center",textDecoration:"none",background:"rgba(255,255,255,0.04)",border:`1px solid ${S.border}`,borderRadius:10,padding:"12px 14px"}}>
+                <span style={{fontSize:22}}>{c.icon}</span>
+                <div><div style={{fontWeight:700,fontSize:13,color:c.color}}>{c.title}</div><div style={{fontSize:12,color:S.muted}}>{c.desc}</div></div>
+              </a>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section style={{padding:"48px 20px",textAlign:"center",borderTop:"1px solid rgba(255,255,255,0.06)"}}>
-        <h2 style={{fontSize:"clamp(22px,4vw,36px)",fontWeight:900,letterSpacing:-1,marginBottom:10}}>Start managing smarter today</h2>
-        <p style={{color:"rgba(255,255,255,0.4)",marginBottom:24,fontSize:15,lineHeight:1.7}}>No installation. No credit card. Works on any Android or iPhone.</p>
-        <div style={{display:"flex",gap:10,justifyContent:"center",flexWrap:"wrap",marginBottom:14}}>
-          <button onClick={onDemo} style={{padding:"15px 30px",borderRadius:10,border:"none",background:"#e8720c",color:"#fff",fontSize:15,fontWeight:800,cursor:"pointer",fontFamily:"inherit"}}>🚀 Try Live Demo</button>
-          <a href="https://wa.me/919876543210?text=Hi%2C+I+want+a+BizBook+demo" style={{padding:"15px 26px",borderRadius:10,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",color:"rgba(255,255,255,0.8)",fontSize:15,fontWeight:700,textDecoration:"none",display:"inline-flex",alignItems:"center",gap:8}}>💬 Book WhatsApp Demo</a>
-        </div>
-        <div style={{fontSize:12,color:"rgba(255,255,255,0.25)"}}>Demo: ID <b style={{color:"rgba(255,255,255,0.5)"}}>demo</b> · Password <b style={{color:"rgba(255,255,255,0.5)"}}>demo123</b></div>
+      {/* ── FINAL CTA ── */}
+      <section style={{padding:"28px 20px 40px",textAlign:"center",borderTop:`1px solid ${S.border}`,background:"linear-gradient(180deg,rgba(232,114,12,0.06),transparent)"}}>
+        <div style={{fontSize:32,marginBottom:10}}>🚀</div>
+        <h2 style={{fontSize:"clamp(22px,4vw,34px)",fontWeight:900,letterSpacing:-1,marginBottom:8}}>Ready to simplify your business?</h2>
+        <p style={{color:S.muted,marginBottom:22,fontSize:14,lineHeight:1.7}}>Join 500+ shop owners already using BizBook.<br/>Start free. No card. No installation. Works on any phone.</p>
+        <button onClick={onDemo} style={{padding:"16px 36px",borderRadius:10,border:"none",background:S.orange,color:"#fff",fontSize:16,fontWeight:900,cursor:"pointer",fontFamily:"inherit",display:"block",margin:"0 auto 12px",animation:"glow 3s infinite"}}>
+          🚀 Start Free Now
+        </button>
+        <a href="https://wa.me/919876543210?text=Hi%2C+I+want+a+BizBook+demo" style={{display:"inline-flex",alignItems:"center",gap:6,padding:"13px 24px",borderRadius:10,border:"1px solid rgba(255,255,255,0.15)",background:"transparent",color:S.text,fontSize:14,fontWeight:700,textDecoration:"none",margin:"0 auto"}}>
+          💬 Book WhatsApp Demo
+        </a>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{padding:"22px 20px",borderTop:"1px solid rgba(255,255,255,0.07)",textAlign:"center"}}>
+      {/* ── FOOTER ── */}
+      <footer style={{padding:"20px",borderTop:`1px solid ${S.border}`,textAlign:"center"}}>
         <div style={{display:"flex",alignItems:"center",justifyContent:"center",gap:8,marginBottom:10}}>
-          <div style={{width:26,height:26,background:"#e8720c",borderRadius:7,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900,fontSize:13,color:"#fff"}}>B</div>
+          <div style={{width:26,height:26,background:S.orange,borderRadius:7,display:"flex",alignItems:"center",justifyContent:"center",fontWeight:900,fontSize:13,color:"#fff"}}>B</div>
           <span style={{fontWeight:800,fontSize:15}}>BizBook</span>
         </div>
         <div style={{display:"flex",gap:14,justifyContent:"center",flexWrap:"wrap",marginBottom:10}}>
-          {[["Privacy Policy","#privacy"],["Terms of Service","#terms"],["📱 +91 98765 43210","https://wa.me/919876543210"],["✉ hello@getbizbook.in","mailto:hello@getbizbook.in"]].map(([l,h])=>(
-            <a key={l} href={h} style={{fontSize:12,color:"rgba(255,255,255,0.28)",textDecoration:"none"}}>{l}</a>
+          {[["Privacy Policy","#"],["Terms","#"],["💬 WhatsApp","https://wa.me/919876543210"],["✉ Email","mailto:hello@getbizbook.in"]].map(([l,h])=>(
+            <a key={l} href={h} style={{fontSize:12,color:S.dim,textDecoration:"none"}}>{l}</a>
           ))}
         </div>
-        <div style={{fontSize:11,color:"rgba(255,255,255,0.15)"}}>© 2026 BizBook · Simple Billing for Every Business · Made with ❤️ in Hyderabad</div>
+        <div style={{fontSize:11,color:"rgba(255,255,255,0.15)"}}>
+          © 2026 BizBook · Made with ❤️ in Hyderabad · Simple Billing for Every Business
+        </div>
       </footer>
     </div>
   );
