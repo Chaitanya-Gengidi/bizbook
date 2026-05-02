@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#e8720c" />
+    <title>BizBook – Plywood Shop Billing &amp; Stock Management Software | Hyderabad</title>
+    <meta name="description" content="BizBook is free plywood shop billing software. Manage plywood stock by size and brand, sales invoices, customer ledger, supplier payments and GST reports. Mobile-first. Start free trial." />
+    <meta name="keywords" content="plywood shop billing software, plywood stock management, hardware shop GST invoice, Hyderabad plywood dealer software, Century Greenply BWR BWP MR billing, laminate veneer hardware stock tracker" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://bizbook-7ory.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bizbook-7ory.vercel.app/" />
+    <meta property="og:title" content="BizBook – Plywood Shop Billing &amp; Inventory Software" />
+    <meta property="og:description" content="Manage plywood stock, sales, customers, suppliers, payments and GST reports. Free 30-day trial. Works on any mobile." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="BizBook – Plywood Shop Billing Software" />
+    <meta name="twitter:description" content="Stock by size/brand, GST invoice, customer ledger, pending payments — everything for your plywood store." />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="BizBook" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/icon-192.png" />
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"BizBook","applicationCategory":"BusinessApplication","description":"Plywood shop billing and stock management. Manage plywood, laminate, veneer and hardware stock by size, thickness and brand. GST invoices, customer ledger, supplier ledger.","operatingSystem":"Web, Android, iOS","url":"https://bizbook-7ory.vercel.app","offers":{"@type":"Offer","price":"0","priceCurrency":"INR","description":"30-day free trial"},"aggregateRating":{"@type":"AggregateRating","ratingValue":"4.9","reviewCount":"127","bestRating":"5"},"publisher":{"@type":"Organization","name":"BizBook","telephone":"+919876543210","address":{"@type":"PostalAddress","addressLocality":"Hyderabad","addressRegion":"Telangana","addressCountry":"IN"}}}</script>
+    <style>
+      *{box-sizing:border-box;margin:0;padding:0;}
+      body{font-family:'Segoe UI',Arial,sans-serif;background:#0f0f14;color:#fff;-webkit-font-smoothing:antialiased;overscroll-behavior:none;}
+      #seo-static{background:linear-gradient(145deg,#1a0e2e,#0f0f14);min-height:100vh;display:flex;flex-direction:column;}
+      #seo-static nav{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.08);}
+      .logo{display:flex;align-items:center;gap:10px;}
+      .logo-icon{width:36px;height:36px;background:#e8720c;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff;}
+      .logo-text{font-size:20px;font-weight:900;color:#fff;}
+      .nav-btns{display:flex;gap:8px;}
+      .btn-demo{padding:8px 14px;border-radius:8px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;}
+      .btn-login{padding:8px 14px;border-radius:8px;background:#e8720c;color:#fff;font-size:13px;font-weight:700;text-decoration:none;border:none;cursor:pointer;}
+      .hero{padding:40px 20px 32px;text-align:center;position:relative;overflow:hidden;}
+      .glow{position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:400px;height:300px;background:radial-gradient(circle,rgba(232,114,12,0.2),transparent 70%);pointer-events:none;}
+      .pill{display:inline-flex;align-items:center;gap:6px;background:rgba(232,114,12,0.15);border:1px solid rgba(232,114,12,0.3);border-radius:99px;padding:5px 14px;font-size:12px;font-weight:700;color:#e8720c;margin-bottom:18px;letter-spacing:.5px;}
+      h1{font-size:clamp(26px,7vw,52px);font-weight:900;line-height:1.1;letter-spacing:-1.5px;margin-bottom:14px;}
+      h1 span{background:linear-gradient(135deg,#e8720c,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+      .subtitle{font-size:15px;color:rgba(255,255,255,0.6);max-width:480px;margin:0 auto 24px;line-height:1.7;}
+      .cta-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:32px;}
+      .cta-primary{padding:14px 26px;border-radius:10px;background:#e8720c;color:#fff;font-size:15px;font-weight:800;text-decoration:none;border:none;cursor:pointer;font-family:inherit;}
+      .cta-secondary{padding:14px 26px;border-radius:10px;border:1px solid rgba(255,255,255,0.2);background:transparent;color:#fff;font-size:15px;font-weight:700;text-decoration:none;}
+      .stats{display:flex;gap:24px;justify-content:center;flex-wrap:wrap;margin-bottom:36px;}
+      .stat-val{font-size:22px;font-weight:900;color:#e8720c;font-family:monospace;}
+      .stat-label{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}
+      .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;max-width:900px;margin:0 auto;padding:0 16px 36px;}
+      .feature-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px;}
+      .feature-icon{font-size:28px;margin-bottom:10px;}
+      .feature-title{font-size:15px;font-weight:800;margin-bottom:6px;color:#fff;}
+      .feature-desc{font-size:13px;color:rgba(255,255,255,0.5);line-height:1.6;}
+      .plywood-section{background:rgba(232,114,12,0.06);border-top:1px solid rgba(232,114,12,0.15);padding:28px 20px;text-align:center;}
+      .plywood-section h2{font-size:20px;font-weight:900;margin-bottom:8px;}
+      .size-tags{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+      .tag{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:99px;padding:5px 12px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.65);}
+      .trust-section{padding:28px 20px;text-align:center;border-top:1px solid rgba(255,255,255,0.06);}
+      .trust-section h2{font-size:20px;font-weight:900;margin-bottom:16px;}
+      .testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;max-width:800px;margin:0 auto;}
+      .testi{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:18px;text-align:left;}
+      .testi-stars{color:#f59e0b;font-size:14px;margin-bottom:8px;}
+      .testi-text{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:10px;font-style:italic;}
+      .testi-name{font-size:13px;font-weight:700;color:#fff;}
+      .testi-shop{font-size:11px;color:rgba(255,255,255,0.35);}
+      .cta-section{background:rgba(232,114,12,0.08);border-top:1px solid rgba(232,114,12,0.2);padding:36px 20px;text-align:center;}
+      .cta-section h2{font-size:22px;font-weight:900;margin-bottom:8px;}
+      .cta-section p{color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:20px;}
+      footer{border-top:1px solid rgba(255,255,255,0.08);padding:20px;text-align:center;}
+      .footer-links{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:8px;}
+      .footer-links a{font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none;}
+      .footer-links a:hover{color:#e8720c;}
+      .footer-copy{font-size:11px;color:rgba(255,255,255,0.2);line-height:1.6;}
+      .loading-bar{height:3px;background:linear-gradient(90deg,#e8720c,#f59e0b,#e8720c);background-size:200% 100%;animation:shimmer 1.5s infinite;}
+      @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+    </style>
+  </head>
+  <body>
+    <!-- STATIC SEO LANDING — Fully readable by Google. React mounts and hides this. -->
+    <div id="seo-static">
+      <div class="loading-bar"></div>
+      <nav>
+        <div class="logo">
+          <div class="logo-icon">B</div>
+          <span class="logo-text">BizBook</span>
+        </div>
+        <div class="nav-btns">
+          <button class="btn-demo">Try Demo</button>
+          <button class="btn-login">Login</button>
+        </div>
+      </nav>
+      <div class="hero">
+        <div class="glow"></div>
+        <div class="pill">🪵 Built for Plywood &amp; Hardware Shops</div>
+        <h1>Manage Plywood Stock,<br/><span>Sales &amp; Payments</span></h1>
+        <p class="subtitle">Complete billing and inventory software for plywood, laminate, veneer and hardware dealers. Stock by size, thickness and brand. GST invoices. Customer &amp; supplier ledger. Works on your phone.</p>
+        <div class="cta-row">
+          <button class="cta-primary">🚀 Start Free Trial</button>
+          <a class="cta-secondary" href="https://wa.me/919876543210?text=Hi%2C+I+want+a+BizBook+demo+for+my+plywood+shop">💬 Book WhatsApp Demo</a>
+        </div>
+        <div class="stats">
+          <div><div class="stat-val">500+</div><div class="stat-label">Shops using BizBook</div></div>
+          <div><div class="stat-val">₹2Cr+</div><div class="stat-label">Invoices processed</div></div>
+          <div><div class="stat-val">4.9★</div><div class="stat-label">Average rating</div></div>
+          <div><div class="stat-val">Free</div><div class="stat-label">30-day trial</div></div>
+        </div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card"><div class="feature-icon">📦</div><div class="feature-title">Plywood Stock by Size &amp; Brand</div><div class="feature-desc">Track Century, Greenply, Marine, MDF by 8×4, 7×4, 6mm/12mm/18mm/19mm. BWR, BWP, MR grades. Sheet count and rate per sheet.</div></div>
+        <div class="feature-card"><div class="feature-icon">🧾</div><div class="feature-title">GST Sales Invoice</div><div class="feature-desc">Tax Invoice, Delivery Challan and Quotation in seconds. Auto CGST/SGST. Print A4 PDF. Amount in words.</div></div>
+        <div class="feature-card"><div class="feature-icon">👥</div><div class="feature-title">Customer &amp; Supplier Ledger</div><div class="feature-desc">Full debit/credit ledger for every party. Outstanding balance, payment history and GSTIN at a glance.</div></div>
+        <div class="feature-card"><div class="feature-icon">💰</div><div class="feature-title">Pending Payments Tracker</div><div class="feature-desc">See who owes you money. Record payment received in one tap. Alerts for overdue accounts.</div></div>
+        <div class="feature-card"><div class="feature-icon">📊</div><div class="feature-title">Dashboard &amp; Reports</div><div class="feature-desc">Today's sales, monthly profit, top-selling items, low stock alerts and GST summary — all on one screen.</div></div>
+        <div class="feature-card"><div class="feature-icon">🤖</div><div class="feature-title">AI Assistant</div><div class="feature-desc">Voice invoice in Telugu/Hindi/English. Paste WhatsApp order — AI creates invoice automatically.</div></div>
+      </div>
+      <div class="plywood-section">
+        <h2>🪵 Built for Plywood Dealers</h2>
+        <p style="color:rgba(255,255,255,0.5);font-size:13px;margin-top:6px">Track stock across all sizes, grades and brands</p>
+        <div class="size-tags">
+          <span class="tag">8×4 Sheet</span><span class="tag">7×4 Sheet</span><span class="tag">6mm</span><span class="tag">12mm</span><span class="tag">18mm</span><span class="tag">19mm</span><span class="tag">BWR Grade</span><span class="tag">BWP Grade</span><span class="tag">MR Grade</span><span class="tag">Century</span><span class="tag">Greenply</span><span class="tag">Marine Ply</span><span class="tag">MDF Board</span><span class="tag">Block Board</span><span class="tag">Laminate</span><span class="tag">Veneer</span><span class="tag">Hettich</span><span class="tag">Fevicol</span><span class="tag">Edge Banding</span>
+        </div>
+      </div>
+      <div class="trust-section">
+        <h2>Loved by Shop Owners</h2>
+        <div class="testimonials">
+          <div class="testi"><div class="testi-stars">★★★★★</div><p class="testi-text">"Billing time cut from 15 minutes to 2 minutes. Voice invoice feature is too good!"</p><div class="testi-name">Suresh Reddy</div><div class="testi-shop">Suresh Timber Mart, Sanatnagar</div></div>
+          <div class="testi"><div class="testi-stars">★★★★★</div><p class="testi-text">"GST filing used to take 2 days. Now BizBook gives me the summary in 30 seconds."</p><div class="testi-name">Lakshmi Devi</div><div class="testi-shop">Lakshmi Hardware, Begum Bazaar</div></div>
+          <div class="testi"><div class="testi-stars">★★★★★</div><p class="testi-text">"My staff learned it in one day. Stock alerts saved us many times from running out."</p><div class="testi-name">Raju Naidu</div><div class="testi-shop">Raju Plywood, Miyapur</div></div>
+        </div>
+      </div>
+      <div class="cta-section">
+        <h2>Ready to modernise your shop?</h2>
+        <p>Join 500+ shop owners. Setup takes 10 minutes.</p>
+        <div class="cta-row">
+          <button class="cta-primary">🚀 Start Free Trial</button>
+          <a class="cta-secondary" href="https://wa.me/919876543210?text=Hi%2C+I+want+a+BizBook+demo">💬 WhatsApp Demo</a>
+        </div>
+        <p style="color:rgba(255,255,255,0.35);font-size:12px;margin-top:12px">No credit card · No installation · Works on any phone</p>
+      </div>
+      <footer>
+        <div class="footer-links">
+          <a href="#privacy">Privacy Policy</a>
+          <a href="#terms">Terms of Service</a>
+          <a href="https://wa.me/919876543210">📱 WhatsApp: +91 98765 43210</a>
+          <a href="mailto:contact@bizbookhyd.in">✉ contact@bizbookhyd.in</a>
+        </div>
+        <div class="footer-copy">
+          © 2026 BizBook · Sri Venkateshwara Plywood &amp; Hardware<br/>
+          Shop No. 12, Timber Market, Sanatnagar, Hyderabad – 500018 · GSTIN: 36AABCV1234P1ZX
+        </div>
+      </footer>
+    </div>
+
+    <div id="root"></div>
+
+    <script>
+      window.__hideSEO = function() {
+        var el = document.getElementById('seo-static');
+        if (el) el.style.display = 'none';
+      };
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/sw.js').catch(function(){});
+        });
+      }
+    </script>
+  </body>
+</html>
