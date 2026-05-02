@@ -841,69 +841,209 @@ function InvoiceForm({invoices,setInvoices,parties,products,onClose,defaultType=
 }
 
 function Dashboard({invoices,parties,products,setPage,shopInfo,onLogout}){
-  const sales=invoices.filter(i=>i.type==="Sale");const purchases=invoices.filter(i=>i.type==="Purchase");
-  const totalSales=sales.reduce((s,i)=>s+i.total,0);const totalPurchases=purchases.reduce((s,i)=>s+i.total,0);
-  const toReceive=parties.filter(p=>p.balance>0).reduce((s,p)=>s+p.balance,0);const toPay=parties.filter(p=>p.balance<0).reduce((s,p)=>s+Math.abs(p.balance),0);
-  const lowStock=products.filter(p=>p.stock<=p.minStock);const recent=[...invoices].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,4);
-  return(<div style={{paddingBottom:90}}>
-    <div style={{background:T.accent,padding:"22px 20px 20px",position:"relative",overflow:"hidden"}}>
-      <div style={{position:"absolute",right:-30,top:-30,width:130,height:130,background:"rgba(255,255,255,0.08)",borderRadius:"50%"}}/>
-      <div style={{fontSize:12,color:"rgba(255,255,255,0.8)",fontWeight:600,marginBottom:3}}>Good morning 👋</div>
-      <div style={{fontSize:24,fontWeight:900,color:"#fff"}}>BizBook</div>
-      <div style={{fontSize:12,color:"rgba(255,255,255,0.75)"}}>FY 2025–26 · Hyderabad Plywood Store</div>
-    </div>
-    <div style={{padding:"16px 16px 0"}}>
+  const [showProfile,setShowProfile]=useState(false);
+  const sales=invoices.filter(i=>i.type==="Sale");
+  const purchases=invoices.filter(i=>i.type==="Purchase");
+  const totalSales=sales.reduce((s,i)=>s+i.total,0);
+  const totalPurchases=purchases.reduce((s,i)=>s+i.total,0);
+  const toReceive=parties.filter(p=>p.balance>0).reduce((s,p)=>s+p.balance,0);
+  const toPay=parties.filter(p=>p.balance<0).reduce((s,p)=>s+Math.abs(p.balance),0);
+  const netProfit=totalSales-totalPurchases;
+  const profitPct=totalSales>0?Math.round(netProfit/totalSales*100):0;
+  const lowStock=products.filter(p=>p.stock<=p.minStock);
+  const recent=[...invoices].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,4);
+  const hour=new Date().getHours();
+  const greeting=hour<12?"Good morning":"hour<17"?"Good afternoon":"Good evening";
 
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:10}}>
-        <KpiCard label="Sales (Apr)" value={fmt(totalSales)} icon="📈" color={T.green}/>
-        <KpiCard label="Purchases" value={fmt(totalPurchases)} icon="📦" color={T.blue}/>
-      </div>
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:10,marginBottom:16}}>
-        <KpiCard label="To Receive" value={fmt(toReceive)} icon="💚" color={T.green}/>
-        <KpiCard label="To Pay" value={fmt(toPay)} icon="❤️" color={T.red}/>
-      </div>
-      <div style={{background:"linear-gradient(135deg,#16a34a,#15803d)",borderRadius:T.radius,padding:"16px 20px",marginBottom:16,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-        <div><div style={{fontSize:11,color:"rgba(255,255,255,0.8)",fontWeight:700,marginBottom:2}}>NET PROFIT (Apr)</div><div style={{fontSize:26,fontWeight:900,color:"#fff",fontFamily:"monospace"}}>{fmt(totalSales-totalPurchases)}</div></div>
-        <span style={{fontSize:40}}>💰</span>
-      </div>
-      {/* AI Hub Banner */}
-      <button onClick={()=>setPage("ai")} style={{width:"100%",background:`linear-gradient(135deg,${T.purple},#6d28d9)`,borderRadius:T.radius,padding:"16px",marginBottom:16,border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:12,fontFamily:"inherit",boxShadow:`0 4px 16px ${T.purple}44`}}>
-        <span style={{fontSize:32}}>🤖</span>
-        <div style={{textAlign:"left"}}><div style={{fontSize:15,fontWeight:900,color:"#fff"}}>AI Assistant</div><div style={{fontSize:12,color:"rgba(255,255,255,0.8)"}}>Voice orders • WhatsApp parser • Smart reports</div></div>
-        <span style={{color:"rgba(255,255,255,0.7)",fontSize:20,marginLeft:"auto"}}>›</span>
-      </button>
-      <div style={{marginBottom:16}}>
-        <div style={{fontSize:12,fontWeight:800,color:T.textMid,marginBottom:10,textTransform:"uppercase",letterSpacing:0.5}}>Quick Actions</div>
-        <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8}}>
-          {[{icon:"🧾",label:"Sale",fn:()=>setPage("invoices")},{icon:"🛒",label:"Purchase",fn:()=>setPage("invoices")},{icon:"👤",label:"Party",fn:()=>setPage("parties")},{icon:"📦",label:"Stock",fn:()=>setPage("inventory")}].map(q=>(
-            <button key={q.label} onClick={q.fn} style={{background:T.card,border:`1px solid ${T.border}`,borderRadius:T.radiusSm,padding:"12px 4px",display:"flex",flexDirection:"column",alignItems:"center",gap:5,cursor:"pointer",fontFamily:"inherit"}}>
-              <span style={{fontSize:22}}>{q.icon}</span><span style={{fontSize:11,fontWeight:700,color:T.textMid}}>{q.label}</span>
+  // Mini bar sparkline data (fake weekly trend)
+  const bars=[42,68,35,82,56,91,75];
+
+  return(
+    <div style={{paddingBottom:90,background:"#0f0f14",minHeight:"100vh"}}>
+      <style>{`
+        @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+        .dash-card{animation:fadeUp 0.4s ease both;}
+        .dash-card:nth-child(2){animation-delay:0.05s;}
+        .dash-card:nth-child(3){animation-delay:0.1s;}
+        .dash-card:nth-child(4){animation-delay:0.15s;}
+      `}</style>
+
+      {/* ── HERO HEADER ── */}
+      <div style={{position:"relative",background:"linear-gradient(145deg,#1a0e2e,#0f0f14)",padding:"0 0 24px",overflow:"hidden"}}>
+        {/* Glow blobs */}
+        <div style={{position:"absolute",top:-40,right:-40,width:180,height:180,background:"radial-gradient(circle,rgba(232,114,12,0.25),transparent 70%)",borderRadius:"50%",pointerEvents:"none"}}/>
+        <div style={{position:"absolute",bottom:-20,left:-30,width:140,height:140,background:"radial-gradient(circle,rgba(124,58,237,0.2),transparent 70%)",borderRadius:"50%",pointerEvents:"none"}}/>
+
+        {/* Top bar */}
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"16px 20px 0"}}>
+          <div>
+            <div style={{fontSize:11,color:"rgba(255,255,255,0.5)",fontWeight:600,letterSpacing:0.5,marginBottom:2}}>{hour<12?"🌅":"hour<17"?"☀️":"🌙"} {greeting}</div>
+            <div style={{fontSize:20,fontWeight:900,color:"#fff",letterSpacing:-0.5}}>{shopInfo?.name||"BizBook"}</div>
+          </div>
+          <div style={{display:"flex",gap:10,alignItems:"center"}}>
+            {lowStock.length>0&&(
+              <div style={{background:"rgba(239,68,68,0.2)",border:"1px solid rgba(239,68,68,0.3)",borderRadius:99,padding:"4px 10px",fontSize:11,fontWeight:700,color:"#f87171",display:"flex",alignItems:"center",gap:4}}>
+                ⚠ {lowStock.length}
+              </div>
+            )}
+            <button onClick={()=>setShowProfile(!showProfile)} style={{width:36,height:36,borderRadius:99,background:"rgba(255,255,255,0.1)",border:"1px solid rgba(255,255,255,0.15)",cursor:"pointer",fontSize:15,display:"flex",alignItems:"center",justifyContent:"center",backdropFilter:"blur(10px)"}}>
+              👤
             </button>
+          </div>
+        </div>
+
+        {/* Profile dropdown */}
+        {showProfile&&(
+          <div style={{position:"absolute",top:64,right:16,background:"#1e1e2a",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:"16px",zIndex:50,boxShadow:"0 12px 40px rgba(0,0,0,0.5)",minWidth:210,backdropFilter:"blur(20px)"}}>
+            <div style={{fontWeight:800,fontSize:14,color:"#fff",marginBottom:2}}>{shopInfo?.owner||"Owner"}</div>
+            <div style={{fontSize:12,color:"rgba(255,255,255,0.4)",marginBottom:12}}>{shopInfo?.phone||""}</div>
+            <div style={{display:"flex",justifyContent:"space-between",padding:"8px 10px",background:"rgba(232,114,12,0.1)",borderRadius:8,marginBottom:12}}>
+              <span style={{fontSize:12,color:"rgba(255,255,255,0.5)"}}>Plan</span>
+              <span style={{fontSize:12,fontWeight:800,color:"#e8720c"}}>{shopInfo?.plan||"Pro"}</span>
+            </div>
+            <button onClick={()=>{setShowProfile(false);onLogout&&onLogout();}} style={{width:"100%",padding:"9px",borderRadius:8,border:"none",background:"rgba(239,68,68,0.15)",color:"#f87171",fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"inherit"}}>Sign Out</button>
+          </div>
+        )}
+
+        {/* Big profit card */}
+        <div style={{margin:"20px 16px 0",background:"linear-gradient(135deg,rgba(232,114,12,0.15),rgba(245,158,11,0.08))",border:"1px solid rgba(232,114,12,0.25)",borderRadius:20,padding:"20px",backdropFilter:"blur(10px)",position:"relative",overflow:"hidden"}}>
+          <div style={{position:"absolute",right:16,top:"50%",transform:"translateY(-50%)",opacity:0.08,fontSize:80,lineHeight:1}}>₹</div>
+          <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.5)",letterSpacing:1,textTransform:"uppercase",marginBottom:6}}>Net Profit · April 2026</div>
+          <div style={{fontSize:38,fontWeight:900,color:"#fff",fontFamily:"'DM Mono',monospace",letterSpacing:-1,marginBottom:8}}>
+            {fmt(netProfit)}
+          </div>
+          <div style={{display:"flex",alignItems:"center",gap:8}}>
+            <div style={{background:profitPct>=0?"rgba(34,197,94,0.2)":"rgba(239,68,68,0.2)",border:`1px solid ${profitPct>=0?"rgba(34,197,94,0.4)":"rgba(239,68,68,0.4)"}`,borderRadius:99,padding:"3px 10px",fontSize:12,fontWeight:700,color:profitPct>=0?"#4ade80":"#f87171"}}>
+              {profitPct>=0?"↑":"↓"} {Math.abs(profitPct)}% margin
+            </div>
+            <span style={{fontSize:12,color:"rgba(255,255,255,0.35)"}}>vs last month</span>
+          </div>
+
+          {/* Mini sparkline */}
+          <div style={{display:"flex",alignItems:"flex-end",gap:3,marginTop:16,height:32}}>
+            {bars.map((h,i)=>(
+              <div key={i} style={{flex:1,background:i===bars.length-1?"#e8720c":"rgba(255,255,255,0.15)",borderRadius:"3px 3px 0 0",height:`${h}%`,transition:"height 0.5s ease",minHeight:3}}/>
+            ))}
+          </div>
+          <div style={{display:"flex",justifyContent:"space-between",marginTop:4}}>
+            {["M","T","W","T","F","S","S"].map((d,i)=><span key={i} style={{fontSize:9,color:"rgba(255,255,255,0.3)",flex:1,textAlign:"center"}}>{d}</span>)}
+          </div>
+        </div>
+      </div>
+
+      {/* ── KPI SCROLL ROW ── */}
+      <div style={{padding:"16px 16px 0"}}>
+        <div style={{display:"flex",gap:10,overflowX:"auto",paddingBottom:4,scrollbarWidth:"none"}}>
+          {[
+            {label:"Sales",value:fmt(totalSales),icon:"📈",color:"#4ade80",bg:"rgba(74,222,128,0.1)",border:"rgba(74,222,128,0.2)"},
+            {label:"Purchases",value:fmt(totalPurchases),icon:"📦",color:"#60a5fa",bg:"rgba(96,165,250,0.1)",border:"rgba(96,165,250,0.2)"},
+            {label:"To Receive",value:fmt(toReceive),icon:"⬆",color:"#4ade80",bg:"rgba(74,222,128,0.08)",border:"rgba(74,222,128,0.15)"},
+            {label:"To Pay",value:fmt(toPay),icon:"⬇",color:"#f87171",bg:"rgba(248,113,113,0.1)",border:"rgba(248,113,113,0.2)"},
+          ].map((k,i)=>(
+            <div key={i} className="dash-card" style={{background:k.bg,border:`1px solid ${k.border}`,borderRadius:14,padding:"14px 16px",minWidth:140,flexShrink:0}}>
+              <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
+                <span style={{fontSize:18}}>{k.icon}</span>
+                <span style={{fontSize:10,fontWeight:700,color:"rgba(255,255,255,0.35)",textTransform:"uppercase",letterSpacing:0.5}}>{k.label}</span>
+              </div>
+              <div style={{fontSize:17,fontWeight:900,color:k.color,fontFamily:"'DM Mono',monospace",letterSpacing:-0.5}}>{k.value}</div>
+            </div>
           ))}
         </div>
-      </div>
-      {lowStock.length>0&&(<div style={{background:T.amberBg,border:`1px solid ${T.amberBorder}`,borderRadius:T.radius,padding:"14px 16px",marginBottom:16}}>
-        <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:10}}><span style={{fontSize:18}}>⚠️</span><span style={{fontWeight:800,fontSize:14,color:T.amber}}>Low Stock ({lowStock.length} items)</span></div>
-        {lowStock.slice(0,3).map(p=>(<div key={p.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderTop:`1px solid ${T.amberBorder}`}}>
-          <span style={{fontSize:13,fontWeight:600,color:T.textMid}}>{p.name}</span>
-          <Badge color={p.stock===0?T.red:T.amber} bg={p.stock===0?T.redBg:T.amberBg} border={p.stock===0?T.redBorder:T.amberBorder}>{p.stock} {p.unit}</Badge>
-        </div>))}
-      </div>)}
-      <div>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:10}}>
-          <div style={{fontSize:12,fontWeight:800,color:T.textMid,textTransform:"uppercase",letterSpacing:0.5}}>Recent Transactions</div>
-          <button onClick={()=>setPage("invoices")} style={{fontSize:13,color:T.accent,fontWeight:700,background:"none",border:"none",cursor:"pointer"}}>View all →</button>
+
+        {/* ── AI BANNER ── */}
+        <button onClick={()=>setPage("ai")} style={{width:"100%",marginTop:14,background:"linear-gradient(135deg,#4c1d95,#6d28d9,#7c3aed)",borderRadius:16,padding:"16px 18px",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:14,fontFamily:"inherit",boxShadow:"0 8px 24px rgba(124,58,237,0.35)",position:"relative",overflow:"hidden"}}>
+          <div style={{position:"absolute",right:-10,top:-10,width:80,height:80,background:"rgba(255,255,255,0.06)",borderRadius:"50%"}}/>
+          <div style={{width:44,height:44,background:"rgba(255,255,255,0.15)",borderRadius:12,display:"flex",alignItems:"center",justifyContent:"center",fontSize:22,flexShrink:0,backdropFilter:"blur(10px)"}}>🤖</div>
+          <div style={{textAlign:"left",flex:1}}>
+            <div style={{fontSize:15,fontWeight:900,color:"#fff",marginBottom:2}}>AI Assistant</div>
+            <div style={{fontSize:11,color:"rgba(255,255,255,0.65)"}}>Voice · WhatsApp · GST · Risk Score</div>
+          </div>
+          <div style={{background:"rgba(255,255,255,0.15)",borderRadius:99,padding:"4px 12px",fontSize:12,fontWeight:700,color:"#fff",flexShrink:0}}>Open →</div>
+        </button>
+
+        {/* ── QUICK ACTIONS ── */}
+        <div style={{marginTop:16}}>
+          <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.3)",textTransform:"uppercase",letterSpacing:1,marginBottom:10}}>Quick Actions</div>
+          <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8}}>
+            {[
+              {icon:"🧾",label:"Sale",fn:()=>setPage("invoices"),color:"rgba(96,165,250,0.15)",border:"rgba(96,165,250,0.25)"},
+              {icon:"🛒",label:"Purchase",fn:()=>setPage("invoices"),color:"rgba(251,191,36,0.12)",border:"rgba(251,191,36,0.2)"},
+              {icon:"👥",label:"Party",fn:()=>setPage("parties"),color:"rgba(74,222,128,0.12)",border:"rgba(74,222,128,0.2)"},
+              {icon:"📦",label:"Stock",fn:()=>setPage("inventory"),color:"rgba(232,114,12,0.12)",border:"rgba(232,114,12,0.2)"},
+            ].map(q=>(
+              <button key={q.label} onClick={q.fn} style={{background:q.color,border:`1px solid ${q.border}`,borderRadius:12,padding:"14px 6px",display:"flex",flexDirection:"column",alignItems:"center",gap:6,cursor:"pointer",fontFamily:"inherit"}}>
+                <span style={{fontSize:22}}>{q.icon}</span>
+                <span style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.7)"}}>{q.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
-        <div style={{background:T.card,borderRadius:T.radius,border:`1px solid ${T.border}`,overflow:"hidden"}}>
-          {recent.map((inv,i)=>(<div key={inv.id} style={{display:"flex",alignItems:"center",padding:"14px 16px",borderBottom:i<recent.length-1?`1px solid ${T.borderLight}`:"none",gap:12}}>
-            <div style={{width:40,height:40,borderRadius:99,background:inv.type==="Sale"?T.blueBg:T.amberBg,display:"flex",alignItems:"center",justifyContent:"center",fontSize:18,flexShrink:0}}>{inv.type==="Sale"?"📤":"📥"}</div>
-            <div style={{flex:1,minWidth:0}}><div style={{fontWeight:700,fontSize:14,whiteSpace:"nowrap",overflow:"hidden",textOverflow:"ellipsis"}}>{inv.party}</div><div style={{fontSize:12,color:T.textMuted}}>{inv.id} · {inv.date}</div></div>
-            <div style={{textAlign:"right",flexShrink:0}}><div style={{fontWeight:800,fontSize:15,fontFamily:"monospace",color:inv.type==="Sale"?T.green:T.red}}>{inv.type==="Sale"?"+":"-"}{fmt(inv.total)}</div><Badge color={inv.status==="Paid"?T.green:inv.status==="Partial"?T.amber:T.red} bg={inv.status==="Paid"?T.greenBg:inv.status==="Partial"?T.amberBg:T.redBg} border={inv.status==="Paid"?T.greenBorder:inv.status==="Partial"?T.amberBorder:T.redBorder}>{inv.status}</Badge></div>
-          </div>))}
+
+        {/* ── LOW STOCK ALERT ── */}
+        {lowStock.length>0&&(
+          <div style={{marginTop:14,background:"rgba(245,158,11,0.08)",border:"1px solid rgba(245,158,11,0.2)",borderRadius:16,padding:"14px 16px"}}>
+            <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",marginBottom:10}}>
+              <div style={{display:"flex",alignItems:"center",gap:8}}>
+                <div style={{width:28,height:28,background:"rgba(245,158,11,0.2)",borderRadius:8,display:"flex",alignItems:"center",justifyContent:"center",fontSize:14}}>⚠️</div>
+                <span style={{fontWeight:800,fontSize:13,color:"#fbbf24"}}>Low Stock Alert</span>
+              </div>
+              <span style={{fontSize:11,background:"rgba(245,158,11,0.2)",color:"#fbbf24",borderRadius:99,padding:"2px 8px",fontWeight:700}}>{lowStock.length} items</span>
+            </div>
+            {lowStock.slice(0,3).map(p=>(
+              <div key={p.id} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"8px 0",borderTop:"1px solid rgba(245,158,11,0.15)"}}>
+                <span style={{fontSize:13,color:"rgba(255,255,255,0.7)",fontWeight:500}}>{p.name}</span>
+                <span style={{fontSize:12,fontWeight:800,color:p.stock===0?"#f87171":"#fbbf24",fontFamily:"monospace"}}>{p.stock} {p.unit}</span>
+              </div>
+            ))}
+            <button onClick={()=>setPage("inventory")} style={{marginTop:10,width:"100%",padding:"8px",borderRadius:8,border:"1px solid rgba(245,158,11,0.25)",background:"transparent",color:"#fbbf24",fontSize:12,fontWeight:700,cursor:"pointer",fontFamily:"inherit"}}>
+              View All Stock →
+            </button>
+          </div>
+        )}
+
+        {/* ── RECENT TRANSACTIONS ── */}
+        <div style={{marginTop:16,marginBottom:8}}>
+          <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:12}}>
+            <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.3)",textTransform:"uppercase",letterSpacing:1}}>Recent Transactions</div>
+            <button onClick={()=>setPage("invoices")} style={{fontSize:12,color:"#e8720c",fontWeight:700,background:"none",border:"none",cursor:"pointer"}}>View all →</button>
+          </div>
+          <div style={{display:"flex",flexDirection:"column",gap:8}}>
+            {recent.map((inv,i)=>(
+              <div key={inv.id} onClick={()=>setPage("invoices")} style={{background:"#1a1a24",border:"1px solid rgba(255,255,255,0.07)",borderRadius:14,padding:"12px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer",transition:"all 0.15s"}}
+                onMouseEnter={e=>e.currentTarget.style.borderColor="rgba(232,114,12,0.3)"}
+                onMouseLeave={e=>e.currentTarget.style.borderColor="rgba(255,255,255,0.07)"}>
+                <div style={{width:40,height:40,borderRadius:12,background:inv.type==="Sale"?"rgba(96,165,250,0.15)":"rgba(251,191,36,0.12)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:17,flexShrink:0}}>
+                  {inv.type==="Sale"?"📤":"📥"}
+                </div>
+                <div style={{flex:1,minWidth:0}}>
+                  <div style={{fontWeight:700,fontSize:14,color:"#f0ede8",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{inv.party}</div>
+                  <div style={{fontSize:11,color:"rgba(255,255,255,0.35)",marginTop:2}}>{inv.id} · {inv.date}</div>
+                </div>
+                <div style={{textAlign:"right",flexShrink:0}}>
+                  <div style={{fontWeight:900,fontSize:15,fontFamily:"'DM Mono',monospace",color:inv.type==="Sale"?"#4ade80":"#60a5fa"}}>
+                    {inv.type==="Sale"?"+":"-"}{fmt(inv.total)}
+                  </div>
+                  <div style={{marginTop:4,display:"inline-flex",alignItems:"center",padding:"2px 8px",borderRadius:99,fontSize:10,fontWeight:700,
+                    background:inv.status==="Paid"?"rgba(74,222,128,0.15)":inv.status==="Partial"?"rgba(251,191,36,0.15)":"rgba(248,113,113,0.15)",
+                    color:inv.status==="Paid"?"#4ade80":inv.status==="Partial"?"#fbbf24":"#f87171",
+                    border:`1px solid ${inv.status==="Paid"?"rgba(74,222,128,0.3)":inv.status==="Partial"?"rgba(251,191,36,0.3)":"rgba(248,113,113,0.3)"}`}}>
+                    {inv.status}
+                  </div>
+                </div>
+              </div>
+            ))}
+            {recent.length===0&&(
+              <div style={{textAlign:"center",padding:"32px 20px",color:"rgba(255,255,255,0.2)"}}>
+                <div style={{fontSize:36,marginBottom:8}}>🧾</div>
+                <div style={{fontSize:13}}>No transactions yet</div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
-  </div>);
+  );
 }
 
 function InvoicesPage({invoices,setInvoices,parties,products}){
@@ -1299,8 +1439,10 @@ function BizBook({shopInfo,onLogout}){
   const [parties,setParties]=useState(seedParties);
   const [products,setProducts]=useState(seedProducts);
 
+  const isDark=page==="dashboard";
+
   return(
-    <div style={{maxWidth:480,margin:"0 auto",minHeight:"100vh",background:T.bg,fontFamily:"'Sora','Nunito',sans-serif",position:"relative",color:T.text}}>
+    <div style={{maxWidth:480,margin:"0 auto",minHeight:"100vh",background:isDark?"#0f0f14":T.bg,fontFamily:"'Sora','Nunito',sans-serif",position:"relative",color:isDark?"#f0ede8":T.text}}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap');
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -1318,12 +1460,12 @@ function BizBook({shopInfo,onLogout}){
         {page==="ai"&&<AIHub invoices={invoices} setInvoices={setInvoices} products={products} setProducts={setProducts} parties={parties}/>}
         {page==="reports"&&<ReportsPage invoices={invoices} products={products}/>}
       </div>
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,background:T.card,borderTop:`1px solid ${T.border}`,display:"flex",zIndex:100,boxShadow:"0 -4px 20px rgba(0,0,0,0.08)",paddingBottom:"env(safe-area-inset-bottom,0)"}}>
+      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,background:isDark?"#141420":"#fff",borderTop:isDark?"1px solid rgba(255,255,255,0.08)":`1px solid ${T.border}`,display:"flex",zIndex:100,boxShadow:isDark?"0 -4px 24px rgba(0,0,0,0.4)":"0 -4px 20px rgba(0,0,0,0.08)",paddingBottom:"env(safe-area-inset-bottom,0)"}}>
         {NAV.map(n=>{const active=page===n.id;return(
           <button key={n.id} onClick={()=>setPage(n.id)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",padding:"10px 4px 10px",border:"none",background:"none",cursor:"pointer",gap:3,fontFamily:"inherit",position:"relative"}}>
             {active&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:24,height:3,background:n.id==="ai"?T.purple:T.accent,borderRadius:"0 0 3px 3px"}}/>}
             <span style={{fontSize:20,transform:active?"scale(1.15)":"scale(1)",transition:"transform 0.15s"}}>{n.icon}</span>
-            <span style={{fontSize:10,fontWeight:active?800:600,color:active?(n.id==="ai"?T.purple:T.accent):T.textLight,letterSpacing:0.2}}>{n.label}</span>
+            <span style={{fontSize:10,fontWeight:active?800:600,color:active?(n.id==="ai"?T.purple:T.accent):isDark?"rgba(255,255,255,0.3)":T.textLight,letterSpacing:0.2}}>{n.label}</span>
           </button>
         );})}
       </div>
