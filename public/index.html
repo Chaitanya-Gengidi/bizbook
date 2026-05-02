@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#e8720c" />
+    <meta name="description" content="BizBook – AI-powered billing, inventory and GST manager for your plywood store in Hyderabad" />
+
+    <!-- PWA / iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="BizBook" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="BizBook" />
+
+    <!-- Icons -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/icon-192.png" />
+
+    <!-- Splash screen color for iOS -->
+    <meta name="msapplication-TileColor" content="#e8720c" />
+
+    <title>BizBook – Plywood Store</title>
+
+    <style>
+      /* Prevent flash of unstyled content */
+      body {
+        margin: 0;
+        padding: 0;
+        background: #f5f4f0;
+        font-family: 'Sora', 'Nunito', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overscroll-behavior: none;
+      }
+      /* Safe area for notch phones */
+      #root {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+      }
+      /* Loading spinner */
+      #splash {
+        position: fixed;
+        inset: 0;
+        background: #e8720c;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        transition: opacity 0.4s;
+      }
+      #splash h1 {
+        color: #fff;
+        font-size: 32px;
+        font-weight: 900;
+        margin: 0 0 8px;
+        letter-spacing: -1px;
+      }
+      #splash p {
+        color: rgba(255,255,255,0.8);
+        font-size: 14px;
+        margin: 0;
+      }
+      #splash .dot {
+        width: 8px; height: 8px;
+        background: rgba(255,255,255,0.6);
+        border-radius: 50%;
+        display: inline-block;
+        margin: 16px 4px 0;
+        animation: bounce 1.2s infinite ease-in-out;
+      }
+      #splash .dot:nth-child(2) { animation-delay: 0.2s; }
+      #splash .dot:nth-child(3) { animation-delay: 0.4s; }
+      @keyframes bounce {
+        0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+        40% { transform: scale(1); opacity: 1; }
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run BizBook.</noscript>
+
+    <!-- Splash screen (hidden once React loads) -->
+    <div id="splash">
+      <h1>BizBook</h1>
+      <p>Plywood Store Manager</p>
+      <div>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+    </div>
+
+    <div id="root"></div>
+
+    <script>
+      // Hide splash once app loads
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          var s = document.getElementById('splash');
+          if (s) { s.style.opacity = '0'; setTimeout(function(){ s.remove(); }, 400); }
+        }, 800);
+      });
+
+      // Register service worker for offline / PWA
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/sw.js').then(function (reg) {
+            console.log('SW registered:', reg.scope);
+          }).catch(function (err) {
+            console.log('SW registration failed:', err);
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
