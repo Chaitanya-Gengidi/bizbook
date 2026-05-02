@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 
 /* ═══════════════════════════════════════════════
    BIZBOOK SAAS — Landing Page + Multi-Shop Auth
