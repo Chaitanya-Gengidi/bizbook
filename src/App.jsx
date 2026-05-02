@@ -59,8 +59,6 @@ const SHOPS = {
   },
 };
 
-const fmt = n => "₹" + Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:0});
-
 /* ═══════════════ LANDING PAGE ═══════════════ */
 function LandingPage({ onLogin, onDemo }) {
 
@@ -419,9 +417,9 @@ const TL = {
 
 function BizApp({ shop, onLogout }) {
   const [page, setPage] = useState("dashboard");
-  const [invoices, setInvoices] = useState(shop.invoices || []);
-  const [parties, setParties] = useState(shop.parties || []);
-  const [products, setProducts] = useState(shop.products || []);
+  const [invoices, _setInvoices] = useState(shop.invoices || []);
+  const [parties, _setParties] = useState(shop.parties || []);
+  const [products, _setProducts] = useState(shop.products || []);
   const [showProfile, setShowProfile] = useState(false);
 
   const fmtL = n => "₹" + Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:0});
