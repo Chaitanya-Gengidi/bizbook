@@ -417,9 +417,12 @@ const TL = {
 
 function BizApp({ shop, onLogout }) {
   const [page, setPage] = useState("dashboard");
-  const [invoices, _setInvoices] = useState(shop.invoices || []);
-  const [parties, _setParties] = useState(shop.parties || []);
-  const [products, _setProducts] = useState(shop.products || []);
+  // eslint-disable-next-line no-unused-vars
+  const [invoices, setInvoices] = useState(shop.invoices || []);
+  // eslint-disable-next-line no-unused-vars
+  const [parties, setParties] = useState(shop.parties || []);
+  // eslint-disable-next-line no-unused-vars
+  const [products, setProducts] = useState(shop.products || []);
   const [showProfile, setShowProfile] = useState(false);
 
   const fmtL = n => "₹" + Number(n||0).toLocaleString("en-IN",{maximumFractionDigits:0});
