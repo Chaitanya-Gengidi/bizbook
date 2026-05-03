@@ -183,10 +183,9 @@ function LandingPage({onLogin,onDemo}){
   const mockParse=async()=>{
     setParsing(true);setParsed(null);
     await new Promise(r=>setTimeout(r,1200));
-    // Mock parsed result based on message
     const msg=demoMsg.toLowerCase();
     const items=[];
-    if(msg.includes("century")||msg.includes("19mm"))items.push({name:"Century BWR Ply 19mm",qty:msg.match(/(\d+)\s*sheet/)?Number(msg.match(/(\d+)\s*sheet/)[1]):10,unit:"Sheet",price:2850,total:0});
+    if(msg.includes("century")||msg.includes("19mm"))items.push({name:"Century BWR Ply 19mm",qty:msg.match(/(\d+)\s*sheet/i)?Number(msg.match(/(\d+)\s*sheet/i)[1]):10,unit:"Sheet",price:2850,total:0});
     if(msg.includes("mdf")||msg.includes("18mm"))items.push({name:"MDF Board 18mm",qty:5,unit:"Sheet",price:1800,total:0});
     if(msg.includes("merino")||msg.includes("laminate"))items.push({name:"Merino Laminate 1mm",qty:20,unit:"Sheet",price:950,total:0});
     if(msg.includes("hettich")||msg.includes("hinge"))items.push({name:"Hettich Hinge (pair)",qty:50,unit:"Pair",price:85,total:0});
@@ -648,14 +647,29 @@ function WAParser({invoices,setInvoices,products,parties,setParties,onDone}){
     try{
       const parsed=JSON.parse(raw.replace(/```json|```/g,"").trim());
       const items=parsed.items.map(it=>{
-        const p=products.find(p=>p.id===it.productId);
-        return{...it,price:it.price||p?.price||0,unit:it.unit||p?.unit||"Pcs",total:(it.qty||1)*(it.price||p?.price||0)};
+        const p=products.find(p=>p.id===it.productId)||products.find(p=>p.name.toLowerCase().includes(it.name.toLowerCase().slice(0,6)));
+        const price=it.price||p?.price||0;
+        const qty=it.qty||1;
+        return{...it,price,unit:it.unit||p?.unit||"Pcs",total:qty*price};
       });
       const sub=items.reduce((s,it)=>s+it.total,0);
       setResult({...parsed,items,subtotal:sub,tax:Math.round(sub*0.18),total:sub+Math.round(sub*0.18)});
     }catch{
-      // Fallback mock parse if AI fails
-      setResult({partyName:"Customer",items:[{name:msg.slice(0,40),qty:1,unit:"Pcs",price:0,total:0}],subtotal:0,tax:0,total:0,notes:"Please verify items and prices"});
+      // Smart fallback — parse message manually with prices
+      const msg2=msg.toLowerCase();
+      const fallbackItems=[];
+      products.forEach(p=>{
+        const keywords=p.name.toLowerCase().split(" ");
+        const matched=keywords.some(k=>k.length>3&&msg2.includes(k));
+        if(matched){
+          const qtyMatch=msg2.match(/(\d+)\s*(sheet|pcs|kg|pair|box)/i);
+          const qty=qtyMatch?Number(qtyMatch[1]):1;
+          fallbackItems.push({name:p.name,productId:p.id,qty,unit:p.unit,price:p.price,total:qty*p.price});
+        }
+      });
+      if(fallbackItems.length===0)fallbackItems.push({name:"Item (please edit)",productId:null,qty:1,unit:"Pcs",price:0,total:0});
+      const sub2=fallbackItems.reduce((s,it)=>s+it.total,0);
+      setResult({partyName:"Customer",items:fallbackItems,subtotal:sub2,tax:Math.round(sub2*0.18),total:sub2+Math.round(sub2*0.18),notes:"AI not available — prices auto-filled from your product list. Please verify."});
     }
     setLoading(false);
   };
