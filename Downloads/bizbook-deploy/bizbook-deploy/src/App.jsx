@@ -6,17 +6,20 @@ import { useState } from "react";
 ═══════════════════════════════════════════════════════ */
 
 const G = {
-  // WhatsApp green + warm dark — feels native to India
-  bg:"#f0f2f5",card:"#ffffff",cardAlt:"#f7f8fa",
-  border:"#e4e6ea",borderLight:"#edeef0",
-  ink:"#1a1a1a",inkMid:"#3a3a3a",inkMuted:"#6b7280",inkLight:"#9ca3af",
-  wa:"#25D366",waDark:"#128C7E",waBg:"#dcfce7",waBorder:"#86efac",
-  orange:"#f59e0b",orangeBg:"#fffbeb",orangeBorder:"#fde68a",
-  red:"#ef4444",redBg:"#fef2f2",redBorder:"#fecaca",
-  blue:"#3b82f6",blueBg:"#eff6ff",blueBorder:"#bfdbfe",
+  bg:"#f4f5f7",card:"#ffffff",cardAlt:"#fafafa",
+  border:"#e2e5e9",borderLight:"#eef0f2",
+  ink:"#111827",inkMid:"#374151",inkMuted:"#6b7280",inkLight:"#9ca3af",
+  wa:"#25D366",waDark:"#128C7E",waBg:"#f0fdf4",waBorder:"#bbf7d0",
+  pri:"#1a56db",priBg:"#eff6ff",priBorder:"#bfdbfe",priDark:"#1e40af",
+  green:"#059669",greenBg:"#f0fdf4",greenBorder:"#a7f3d0",
+  red:"#dc2626",redBg:"#fef2f2",redBorder:"#fecaca",
+  orange:"#d97706",orangeBg:"#fffbeb",orangeBorder:"#fde68a",
   purple:"#7c3aed",purpleBg:"#f5f3ff",purpleBorder:"#ddd6fe",
-  shadow:"0 1px 4px rgba(0,0,0,0.06)",shadowMd:"0 4px 20px rgba(0,0,0,0.08)",
-  r:14,rs:9,
+  blue:"#1a56db",blueBg:"#eff6ff",blueBorder:"#bfdbfe",
+  shadow:"0 1px 3px rgba(0,0,0,0.08)",
+  shadowMd:"0 4px 6px rgba(0,0,0,0.07)",
+  shadowLg:"0 10px 15px rgba(0,0,0,0.08)",
+  r:12,rs:8,
 };
 
 /* ─── SEED DATA (realistic shop) ─── */
@@ -71,16 +74,16 @@ function Badge({children,color,bg,bdr}){
   return<span style={{display:"inline-flex",alignItems:"center",padding:"2px 9px",borderRadius:99,fontSize:11,fontWeight:700,background:bg||color+"20",color,border:`1px solid ${bdr||color+"30"}`}}>{children}</span>;
 }
 function WABadge(){
-  return<span style={{display:"inline-flex",alignItems:"center",gap:3,padding:"2px 8px",borderRadius:99,fontSize:10,fontWeight:700,background:G.waBg,color:G.waDark,border:`1px solid ${G.waBorder}`}}>💬 WhatsApp</span>;
+  return<span style={{display:"inline-flex",alignItems:"center",gap:3,padding:"2px 8px",borderRadius:99,fontSize:10,fontWeight:700,background:G.waBg,color:G.waDark,border:`1px solid ${G.waBorder}`,fontWeight:600}}>via WhatsApp</span>;
 }
 function Btn({children,onClick,variant="primary",icon,full,sm,disabled}){
   const v={
-    primary:{bg:G.wa,color:"#fff",border:"none",shadow:`0 3px 12px ${G.wa}50`},
+    primary:{bg:G.pri,color:"#fff",border:"none",shadow:`0 3px 8px ${G.pri}40`},
     orange:{bg:G.orange,color:"#fff",border:"none",shadow:`0 2px 8px ${G.orange}40`},
     secondary:{bg:G.card,color:G.inkMid,border:`1.5px solid ${G.border}`,shadow:G.shadow},
     ghost:{bg:"transparent",color:G.inkMuted,border:`1.5px solid ${G.border}`,shadow:"none"},
     danger:{bg:G.redBg,color:G.red,border:`1.5px solid ${G.redBorder}`,shadow:"none"},
-    success:{bg:"#dcfce7",color:G.waDark,border:`1.5px solid ${G.waBorder}`,shadow:"none"},
+    success:{bg:G.greenBg,color:G.green,border:`1.5px solid ${G.greenBorder}`,shadow:"none"},
     purple:{bg:G.purpleBg,color:G.purple,border:`1.5px solid ${G.purpleBorder}`,shadow:"none"},
   }[variant]||{};
   return(
@@ -200,7 +203,7 @@ function LandingPage({onLogin,onDemo}){
   };
 
   return(
-    <div style={{background:"#0c0c10",color:"#f0ede8",minHeight:"100vh",fontFamily:"'Sora',sans-serif"}}>
+    <div style={{background:"#0c0c10",color:"#f0ede8",minHeight:"100vh",fontFamily:"'Inter',sans-serif"}}>
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800;900&family=DM+Mono:wght@400;500&display=swap');
         *{box-sizing:border-box;margin:0;padding:0;}
@@ -544,7 +547,7 @@ function LoginPage({onLogin,onBack,onDemo}){
   const inp={width:"100%",padding:"13px 14px",borderRadius:G.rs,border:`1.5px solid ${G.border}`,background:G.bg,color:G.ink,fontSize:15,fontFamily:"inherit",outline:"none",boxSizing:"border-box"};
 
   return(
-    <div style={{minHeight:"100vh",background:"#0c0c10",fontFamily:"'Sora',sans-serif"}}>
+    <div style={{minHeight:"100vh",background:"#0c0c10",fontFamily:"'Inter',sans-serif"}}>
       <style>{`@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&display=swap');*{box-sizing:border-box;margin:0;padding:0;}`}</style>
       <div style={{padding:"14px 18px",borderBottom:"1px solid rgba(255,255,255,0.07)",display:"flex",alignItems:"center",gap:12}}>
         <button onClick={onBack} style={{background:"none",border:"none",color:"rgba(255,255,255,0.4)",cursor:"pointer",fontSize:20,padding:0}}>←</button>
@@ -689,11 +692,11 @@ function WAParser({invoices,setInvoices,products,parties,setParties,onDone}){
   return(
     <div>
       {/* WhatsApp header */}
-      <div style={{background:"linear-gradient(135deg,#128C7E,#075E54)",borderRadius:12,padding:"14px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
+      <div style={{background:G.waBg,border:`1px solid ${G.waBorder}`,borderRadius:G.r,padding:"14px 16px",marginBottom:16,display:"flex",alignItems:"center",gap:10}}>
         <span style={{fontSize:28}}>💬</span>
         <div>
-          <div style={{fontWeight:800,fontSize:15,color:"#fff"}}>WhatsApp Order → Invoice</div>
-          <div style={{fontSize:12,color:"rgba(255,255,255,0.7)"}}>Paste customer message. AI creates invoice in 3 seconds.</div>
+          <div style={{fontWeight:700,fontSize:15,color:G.waDark}}>WhatsApp Order → Invoice</div>
+          <div style={{fontSize:12,color:G.inkMuted}}>Paste customer message. AI creates invoice in 3 seconds.</div>
         </div>
       </div>
 
@@ -747,7 +750,7 @@ function WAParser({invoices,setInvoices,products,parties,setParties,onDone}){
             {saved?(
               <div style={{textAlign:"center",padding:"12px",color:G.waDark,fontWeight:700}}>✓ Invoice saved! <button onClick={onDone} style={{color:G.wa,background:"none",border:"none",cursor:"pointer",fontFamily:"inherit",fontWeight:700,textDecoration:"underline",fontSize:14}}>View it →</button></div>
             ):(
-              <Btn full icon="✓" variant="primary" onClick={save}>Save Invoice</Btn>
+              <Btn full icon="✓" variant="primary" onClick={save}>Save & Create Invoice</Btn>
             )}
           </div>
         </div>
@@ -867,35 +870,35 @@ function Dashboard({invoices,expenses,parties,products,setPage,shopInfo,onLogout
   const h=new Date().getHours();
 
   return(
-    <div style={{paddingBottom:88,background:"#0f1318",minHeight:"100vh"}}>
-      <style>{`@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}`}</style>
+    <div style={{paddingBottom:88,background:G.bg,minHeight:"100vh"}}>
+      <style>{`@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap");@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}`}</style>
 
       {/* Header */}
       <div style={{padding:"16px 18px 0",position:"relative"}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:4}}>
           <div>
             <div style={{fontSize:11,color:"rgba(255,255,255,0.35)",fontWeight:500}}>{h<12?"Good morning 🌅":h<17?"Good afternoon ☀️":"Good evening 🌙"}</div>
-            <div style={{fontSize:19,fontWeight:900,color:"#fff",letterSpacing:-0.5,marginTop:2}}>{shopInfo?.name||"My Business"}</div>
+            <div style={{fontSize:19,fontWeight:900,color:G.ink,letterSpacing:-0.5,marginTop:2}}>{shopInfo?.name||"My Business"}</div>
           </div>
           <div style={{display:"flex",gap:8,alignItems:"center"}}>
-            {waSales>0&&<div style={{background:"rgba(37,211,102,0.1)",border:"1px solid rgba(37,211,102,0.2)",borderRadius:99,padding:"4px 10px",fontSize:11,fontWeight:700,color:G.wa}}>💬 {waSales} WA bills</div>}
+            {waSales>0&&<div style={{background:G.waBg,border:`1px solid ${G.waBorder}`,borderRadius:99,padding:"4px 10px",fontSize:11,fontWeight:600,color:G.waDark}}>💬 {waSales} WA bills</div>}
             <button onClick={()=>setShowMenu(!showMenu)} style={{width:36,height:36,borderRadius:10,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.1)",cursor:"pointer",fontSize:16,display:"flex",alignItems:"center",justifyContent:"center"}}>☰</button>
           </div>
         </div>
         {showMenu&&(
-          <div style={{position:"absolute",top:58,right:18,background:"#1e2028",border:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:14,zIndex:50,minWidth:200,boxShadow:"0 12px 40px rgba(0,0,0,0.5)"}}>
-            <div style={{fontWeight:800,fontSize:14,color:"#fff",marginBottom:2}}>{shopInfo?.owner||"Owner"}</div>
-            <div style={{fontSize:12,color:"rgba(255,255,255,0.3)",marginBottom:12}}>Plan: {shopInfo?.plan||"Free"}</div>
-            <button onClick={()=>{setShowMenu(false);onLogout&&onLogout();}} style={{width:"100%",padding:"9px",borderRadius:8,border:"none",background:"rgba(239,68,68,0.1)",color:"#f87171",fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"inherit"}}>Sign Out</button>
+          <div style={{position:"absolute",top:58,right:18,background:G.card,border:`1px solid ${G.border}`,borderRadius:G.r,boxShadow:G.shadowLg,padding:14,zIndex:50,minWidth:200,boxShadow:"0 12px 40px rgba(0,0,0,0.5)"}}>
+            <div style={{fontWeight:700,fontSize:14,color:G.ink,marginBottom:2}}>{shopInfo?.owner||"Owner"}</div>
+            <div style={{fontSize:12,color:G.inkMuted,marginBottom:12}}>Plan: {shopInfo?.plan||"Free"}</div>
+            <button onClick={()=>{setShowMenu(false);onLogout&&onLogout();}} style={{width:"100%",padding:"9px",borderRadius:8,border:"none",background:G.redBg,color:G.red,fontSize:13,fontWeight:700,cursor:"pointer",fontFamily:"inherit"}}>Sign Out</button>
           </div>
         )}
       </div>
 
       {/* TODAY HERO */}
-      <div style={{margin:"14px 16px 0",background:"linear-gradient(135deg,rgba(37,211,102,0.12),rgba(18,140,126,0.06))",border:"1px solid rgba(37,211,102,0.2)",borderRadius:18,padding:"18px 20px",position:"relative",overflow:"hidden"}}>
+      <div style={{margin:"14px 16px 0",background:G.card,border:`1px solid ${G.border}`,borderRadius:G.r,boxShadow:G.shadowMd,padding:"18px 20px",position:"relative",overflow:"hidden"}}>
         <div style={{position:"absolute",right:-10,top:-10,width:80,height:80,background:"rgba(37,211,102,0.06)",borderRadius:"50%"}}/>
-        <div style={{fontSize:11,fontWeight:700,color:"rgba(37,211,102,0.7)",letterSpacing:1,textTransform:"uppercase",marginBottom:4}}>Today's Sales</div>
-        <div style={{fontSize:34,fontWeight:900,color:"#fff",fontFamily:"'DM Mono',monospace",letterSpacing:-1,marginBottom:10}}>{fmt(todaySales)}</div>
+        <div style={{fontSize:11,fontWeight:700,color:G.inkMuted,letterSpacing:1,textTransform:"uppercase",marginBottom:4}}>Today's Sales</div>
+        <div style={{fontSize:32,fontWeight:800,color:G.ink,fontFamily:"'DM Mono',monospace",letterSpacing:-1,marginBottom:10}}>{fmt(todaySales)}</div>
         <div style={{display:"flex",gap:16,flexWrap:"wrap"}}>
           {[["Receivable",fmt(toReceive),"#4ade80"],["Payable",fmt(toPay),"#f87171"],["Expenses",fmt(totalExpenses),"#fbbf24"]].map(([l,v,c])=>(
             <div key={l}><div style={{fontSize:10,color:"rgba(255,255,255,0.3)"}}>{l}</div><div style={{fontWeight:800,fontSize:14,color:c,fontFamily:"monospace"}}>{v}</div></div>
@@ -904,7 +907,7 @@ function Dashboard({invoices,expenses,parties,products,setPage,shopInfo,onLogout
       </div>
 
       {/* PROFIT */}
-      <div style={{margin:"10px 16px 0",background:`linear-gradient(135deg,${profit>=0?"#14532d,#166534":"#7f1d1d,#991b1b"})`,borderRadius:16,padding:"14px 18px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+      <div style={{margin:"10px 16px 0",background:profit>=0?G.greenBg:G.redBg,border:`1px solid ${profit>=0?G.greenBorder:G.redBorder}`,borderRadius:12,padding:"14px 18px",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
         <div>
           <div style={{fontSize:11,color:"rgba(255,255,255,0.6)",textTransform:"uppercase",letterSpacing:1,marginBottom:3}}>Monthly {profit>=0?"Profit":"Loss"}</div>
           <div style={{fontSize:28,fontWeight:900,color:"#fff",fontFamily:"'DM Mono',monospace"}}>{fmt(Math.abs(profit))}</div>
@@ -914,7 +917,7 @@ function Dashboard({invoices,expenses,parties,products,setPage,shopInfo,onLogout
 
       {/* WHATSAPP QUICK ACTION — the hero button */}
       <div style={{padding:"14px 16px 0"}}>
-        <button onClick={()=>setPage("wa")} style={{width:"100%",background:"linear-gradient(135deg,#128C7E,#075E54)",borderRadius:16,padding:"16px 18px",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:14,fontFamily:"inherit",boxShadow:"0 6px 24px rgba(37,211,102,0.25)",position:"relative",overflow:"hidden"}}>
+        <button onClick={()=>setPage("wa")} style={{width:"100%",background:G.wa,borderRadius:G.r,padding:"14px 16px",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:12,fontFamily:"inherit",boxShadow:G.shadowMd,position:"relative",overflow:"hidden"}}>
           <div style={{position:"absolute",right:-10,top:-10,width:80,height:80,background:"rgba(255,255,255,0.05)",borderRadius:"50%"}}/>
           <div style={{width:46,height:46,background:"rgba(255,255,255,0.15)",borderRadius:12,display:"flex",alignItems:"center",justifyContent:"center",fontSize:24,flexShrink:0}}>💬</div>
           <div style={{textAlign:"left",flex:1}}>
@@ -927,17 +930,17 @@ function Dashboard({invoices,expenses,parties,products,setPage,shopInfo,onLogout
 
       {/* QUICK ACTIONS */}
       <div style={{padding:"12px 16px 0"}}>
-        <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.2)",textTransform:"uppercase",letterSpacing:1,marginBottom:8}}>Quick Actions</div>
+        <div style={{fontSize:11,fontWeight:700,color:G.inkMuted,textTransform:"uppercase",letterSpacing:0.5,marginBottom:8}}>Quick Actions</div>
         <div style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:8}}>
           {[
-            {icon:"🎙️",label:"Voice",page:"voice",c:"rgba(124,58,237,0.1)",b:"rgba(124,58,237,0.2)",tc:"#a78bfa"},
-            {icon:"✏️",label:"Manual",page:"sale",c:"rgba(59,130,246,0.1)",b:"rgba(59,130,246,0.2)",tc:"#60a5fa"},
-            {icon:"📦",label:"Stock",page:"inventory",c:"rgba(245,158,11,0.1)",b:"rgba(245,158,11,0.2)",tc:"#fbbf24"},
-            {icon:"📋",label:"Balances",page:"parties",c:"rgba(239,68,68,0.1)",b:"rgba(239,68,68,0.2)",tc:"#f87171"},
+            {icon:"🎙️",label:"Voice",page:"voice",c:G.purpleBg,b:G.purpleBorder,tc:G.purple},
+            {icon:"✏️",label:"Manual",page:"sale",c:G.blueBg,b:G.blueBorder,tc:G.blue},
+            {icon:"📦",label:"Stock",page:"inventory",c:G.orangeBg,b:G.orangeBorder,tc:G.orange},
+            {icon:"📋",label:"Balances",page:"parties",c:G.redBg,b:G.redBorder,tc:G.red},
           ].map(b=>(
             <button key={b.label} onClick={()=>setPage(b.page)} style={{background:b.c,border:`1px solid ${b.b}`,borderRadius:12,padding:"13px 6px",display:"flex",flexDirection:"column",alignItems:"center",gap:5,cursor:"pointer",fontFamily:"inherit"}}>
               <span style={{fontSize:22}}>{b.icon}</span>
-              <span style={{fontSize:11,fontWeight:700,color:b.tc}}>{b.label}</span>
+              <span style={{fontSize:11,fontWeight:700,color:b.tc,fontWeight:700}}>{b.label}</span>
             </button>
           ))}
         </div>
@@ -945,14 +948,14 @@ function Dashboard({invoices,expenses,parties,products,setPage,shopInfo,onLogout
 
       {/* LOW STOCK */}
       {lowStock.length>0&&(
-        <div style={{margin:"12px 16px 0",background:"rgba(245,158,11,0.06)",border:"1px solid rgba(245,158,11,0.18)",borderRadius:14,padding:"12px 14px"}}>
+        <div style={{margin:"12px 16px 0",background:G.orangeBg,border:"1px solid rgba(245,158,11,0.18)",borderRadius:14,padding:"12px 14px"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
-            <div style={{fontWeight:800,fontSize:13,color:"#fbbf24"}}>⚠️ Low Stock ({lowStock.length})</div>
+            <div style={{fontWeight:700,fontSize:13,color:G.orange}}>⚠️ Low Stock ({lowStock.length})</div>
             <button onClick={()=>setPage("inventory")} style={{fontSize:12,color:"#fbbf24",background:"none",border:"none",cursor:"pointer",fontFamily:"inherit",fontWeight:600}}>View →</button>
           </div>
           {lowStock.slice(0,3).map(p=>(
             <div key={p.id} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderTop:"1px solid rgba(245,158,11,0.12)"}}>
-              <span style={{fontSize:13,color:"rgba(255,255,255,0.55)"}}>{p.name}</span>
+              <span style={{fontSize:13,color:G.inkMid}}>{p.name}</span>
               <span style={{fontFamily:"monospace",fontWeight:700,fontSize:12,color:"#fbbf24"}}>{p.stock} {p.unit}</span>
             </div>
           ))}
@@ -961,14 +964,14 @@ function Dashboard({invoices,expenses,parties,products,setPage,shopInfo,onLogout
 
       {/* PENDING */}
       {unpaid.length>0&&(
-        <div style={{margin:"10px 16px 0",background:"rgba(239,68,68,0.05)",border:"1px solid rgba(239,68,68,0.15)",borderRadius:14,padding:"12px 14px"}}>
+        <div style={{margin:"10px 16px 0",background:G.redBg,border:"1px solid rgba(239,68,68,0.15)",borderRadius:14,padding:"12px 14px"}}>
           <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:8}}>
-            <div style={{fontWeight:800,fontSize:13,color:"#f87171"}}>💸 Pending ({unpaid.length})</div>
+            <div style={{fontWeight:700,fontSize:13,color:G.red}}>💸 Pending ({unpaid.length})</div>
             <button onClick={()=>setPage("invoices")} style={{fontSize:12,color:"#f87171",background:"none",border:"none",cursor:"pointer",fontFamily:"inherit",fontWeight:600}}>View →</button>
           </div>
           {unpaid.slice(0,3).map(i=>(
             <div key={i.id} style={{display:"flex",justifyContent:"space-between",padding:"6px 0",borderTop:"1px solid rgba(239,68,68,0.1)"}}>
-              <span style={{fontSize:13,color:"rgba(255,255,255,0.55)"}}>{i.party}</span>
+              <span style={{fontSize:13,color:G.inkMid}}>{i.party}</span>
               <span style={{fontFamily:"monospace",fontWeight:700,fontSize:12,color:"#f87171"}}>{fmt(i.total-i.paid)}</span>
             </div>
           ))}
@@ -979,11 +982,11 @@ function Dashboard({invoices,expenses,parties,products,setPage,shopInfo,onLogout
       <div style={{padding:"14px 16px 0"}}>
         <div style={{display:"flex",justifyContent:"space-between",marginBottom:10}}>
           <div style={{fontSize:11,fontWeight:700,color:"rgba(255,255,255,0.2)",textTransform:"uppercase",letterSpacing:1}}>Recent</div>
-          <button onClick={()=>setPage("invoices")} style={{fontSize:12,color:G.wa,fontWeight:700,background:"none",border:"none",cursor:"pointer"}}>View all →</button>
+          <button onClick={()=>setPage("invoices")} style={{fontSize:12,color:G.pri,fontWeight:700,background:"none",border:"none",cursor:"pointer"}}>View all →</button>
         </div>
         <div style={{display:"flex",flexDirection:"column",gap:8}}>
           {recent.map(inv=>(
-            <div key={inv.id} onClick={()=>setPage("invoices")} style={{background:"#1a1e26",border:"1px solid rgba(255,255,255,0.06)",borderRadius:13,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
+            <div key={inv.id} onClick={()=>setPage("invoices")} style={{background:"#ffffff",border:"1px solid rgba(255,255,255,0.06)",borderRadius:13,padding:"11px 14px",display:"flex",alignItems:"center",gap:12,cursor:"pointer"}}>
               <div style={{width:38,height:38,borderRadius:10,background:inv.source==="whatsapp"?"rgba(37,211,102,0.12)":inv.type==="Sale"?"rgba(59,130,246,0.1)":"rgba(245,158,11,0.1)",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>
                 <SourceIcon source={inv.source}/>
               </div>
@@ -992,7 +995,7 @@ function Dashboard({invoices,expenses,parties,products,setPage,shopInfo,onLogout
                 <div style={{fontSize:11,color:"rgba(255,255,255,0.3)",marginTop:1}}>{inv.id} · {inv.date}</div>
               </div>
               <div style={{textAlign:"right",flexShrink:0}}>
-                <div style={{fontWeight:800,fontSize:14,fontFamily:"monospace",color:inv.type==="Sale"?"#4ade80":"#60a5fa"}}>{inv.type==="Sale"?"+":"-"}{fmt(inv.total)}</div>
+                <div style={{fontWeight:800,fontSize:14,fontFamily:"monospace",color:inv.type==="Sale"?G.green:G.blue}}>{inv.type==="Sale"?"+":"-"}{fmt(inv.total)}</div>
                 <div style={{marginTop:3}}>
                   <Badge color={inv.status==="Paid"?"#16a34a":inv.status==="Partial"?"#b45309":"#dc2626"} bg={inv.status==="Paid"?"rgba(22,163,74,0.1)":inv.status==="Partial"?"rgba(180,83,9,0.1)":"rgba(220,38,38,0.1)"} bdr={inv.status==="Paid"?"rgba(22,163,74,0.3)":inv.status==="Partial"?"rgba(180,83,9,0.3)":"rgba(220,38,38,0.3)"}>{inv.status}</Badge>
                 </div>
@@ -1303,7 +1306,7 @@ function ReportsPage({invoices,expenses,products,parties}){
   const waBills=sales.filter(i=>i.source==="whatsapp").length;
   const topP={};sales.forEach(inv=>inv.items.forEach(it=>{if(!topP[it.name])topP[it.name]={qty:0,rev:0};topP[it.name].qty+=Number(it.qty);topP[it.name].rev+=Number(it.total||it.qty*it.price);}));
   const topList=Object.entries(topP).sort((a,b)=>b[1].rev-a[1].rev).slice(0,5);
-  const Sec=({title,emoji,children})=>(<div style={{background:G.card,borderRadius:G.r,border:`1px solid ${G.border}`,overflow:"hidden",marginBottom:12}}><div style={{padding:"11px 14px",background:G.cardAlt,borderBottom:`1px solid ${G.border}`,display:"flex",alignItems:"center",gap:8}}><span style={{fontSize:16}}>{emoji}</span><span style={{fontWeight:800,fontSize:13,color:G.inkMid,textTransform:"uppercase",letterSpacing:0.4}}>{title}</span></div>{children}</div>);
+  const Sec=({title,emoji,children})=>(<div style={{background:G.card,borderRadius:G.r,border:`1px solid ${G.border}`,overflow:"hidden",marginBottom:12}}><div style={{padding:"11px 14px",background:G.bg,borderBottom:`1px solid ${G.border}`,display:"flex",alignItems:"center",gap:8}}><span style={{fontSize:16}}>{emoji}</span><span style={{fontWeight:800,fontSize:13,color:G.inkMid,textTransform:"uppercase",letterSpacing:0.4}}>{title}</span></div>{children}</div>);
   const Row=({label,value,color,bold})=>(<div style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"11px 14px",borderBottom:`1px solid ${G.borderLight}`}}><span style={{fontSize:14,color:G.inkMid,fontWeight:bold?700:400}}>{label}</span><span style={{fontFamily:"monospace",fontWeight:bold?900:700,fontSize:bold?15:13,color:color||G.ink}}>{value}</span></div>);
   return(
     <div style={{paddingBottom:100,background:G.bg,minHeight:"100vh"}}>
@@ -1342,9 +1345,9 @@ function BizBook({shopInfo,onLogout}){
   const [expenses]=useState(SEED_EXPENSES);
 
   return(
-    <div style={{maxWidth:480,margin:"0 auto",minHeight:"100vh",background:page==="dashboard"?"#0f1318":G.bg,fontFamily:"'Sora','Nunito',sans-serif",color:page==="dashboard"?"#f0ede8":G.ink}}>
+    <div style={{maxWidth:480,margin:"0 auto",minHeight:"100vh",background:G.bg,fontFamily:"'Inter',sans-serif",color:G.ink}}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap');
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
         ::-webkit-scrollbar{display:none;}
         input,select,button,textarea{-webkit-tap-highlight-color:transparent;}
@@ -1367,21 +1370,21 @@ function BizBook({shopInfo,onLogout}){
       </div>
 
       {/* Bottom Nav — WhatsApp is the hero tab */}
-      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,background:page==="dashboard"?"#141920":"#fff",borderTop:page==="dashboard"?"1px solid rgba(255,255,255,0.07)":`1px solid ${G.border}`,display:"flex",zIndex:100,boxShadow:page==="dashboard"?"0 -4px 24px rgba(0,0,0,0.4)":G.shadowMd,paddingBottom:"env(safe-area-inset-bottom,0)"}}>
+      <div style={{position:"fixed",bottom:0,left:"50%",transform:"translateX(-50%)",width:"100%",maxWidth:480,background:"#fff",borderTop:page==="dashboard"?"1px solid rgba(255,255,255,0.07)":`1px solid ${G.border}`,display:"flex",zIndex:100,boxShadow:page==="dashboard"?"0 -4px 24px rgba(0,0,0,0.4)":G.shadowMd,paddingBottom:"env(safe-area-inset-bottom,0)"}}>
         {NAV.map(n=>{
           const active=page===n.id;const isDark=page==="dashboard";const isWA=n.id==="wa";
           return(
-            <button key={n.id} onClick={()=>setPage(n.id)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",padding:isWA?"6px 4px 8px":"10px 4px 10px",border:"none",background:isWA&&active?G.wa:isWA?"rgba(37,211,102,0.08)":"none",cursor:"pointer",gap:isWA?2:3,fontFamily:"inherit",position:"relative",borderRadius:isWA?"0":"0",margin:isWA?"4px 2px":"0",borderRadius:isWA?12:0}}>
-              {active&&!isWA&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:24,height:3,background:G.wa,borderRadius:"0 0 3px 3px"}}/>}
+            <button key={n.id} onClick={()=>setPage(n.id)} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",padding:isWA?"6px 4px 8px":"10px 4px 10px",border:"none",background:isWA&&active?G.wa:isWA?G.waBg:"none",cursor:"pointer",gap:isWA?2:3,fontFamily:"inherit",position:"relative",borderRadius:isWA?"0":"0",margin:isWA?"4px 2px":"0",borderRadius:isWA?12:0}}>
+              {active&&!isWA&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:24,height:3,background:G.pri,borderRadius:"0 0 3px 3px"}}/>}
               <span style={{fontSize:isWA?24:20,transform:active?"scale(1.1)":"scale(1)",transition:"transform 0.15s"}}>{n.icon}</span>
-              <span style={{fontSize:10,fontWeight:active||isWA?800:500,color:active?G.wa:isWA?(isDark?"rgba(37,211,102,0.7)":G.waDark):isDark?"rgba(255,255,255,0.3)":G.inkLight,letterSpacing:0.1}}>{n.label}</span>
+              <span style={{fontSize:10,fontWeight:active||isWA?800:500,color:active?G.pri:isWA?G.waDark:G.inkLight,letterSpacing:0.1}}>{n.label}</span>
             </button>
           );
         })}
         <button onClick={()=>setPage("reports")} style={{flex:1,display:"flex",flexDirection:"column",alignItems:"center",padding:"10px 4px 10px",border:"none",background:"none",cursor:"pointer",gap:3,fontFamily:"inherit",position:"relative"}}>
           {page==="reports"&&<div style={{position:"absolute",top:0,left:"50%",transform:"translateX(-50%)",width:24,height:3,background:G.wa,borderRadius:"0 0 3px 3px"}}/>}
           <span style={{fontSize:20,transform:page==="reports"?"scale(1.1)":"scale(1)"}}>📊</span>
-          <span style={{fontSize:10,fontWeight:page==="reports"?800:500,color:page==="reports"?G.wa:page==="dashboard"?"rgba(255,255,255,0.3)":G.inkLight}}>Reports</span>
+          <span style={{fontSize:10,fontWeight:page==="reports"?800:500,color:page==="reports"?G.pri:G.inkLight}}>Reports</span>
         </button>
       </div>
     </div>
