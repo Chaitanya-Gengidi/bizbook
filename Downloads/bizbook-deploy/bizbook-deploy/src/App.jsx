@@ -56,7 +56,13 @@ const hueOf=s=>{let h=0;for(let c of s)h=(h*31+c.charCodeAt(0))%360;return h;};
 const numWords=n=>{
   const a=["","One","Two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Eleven","Twelve","Thirteen","Fourteen","Fifteen","Sixteen","Seventeen","Eighteen","Nineteen"];
   const b=["","","Twenty","Thirty","Forty","Fifty","Sixty","Seventy","Eighty","Ninety"];
-  const c=x=>!x?"":x<20?a[x]:x<100?b[~~(x/10)]+(x%10?" "+a[x%10]:""):a[~~(x/100)]+" Hundred"+(x%100?" and "+c(x%100):""):c(~~(x/1000))+" Thousand"+(x%1000?" "+c(x%1000):"");
+  function c(x){
+    if(!x)return"";
+    if(x<20)return a[x];
+    if(x<100)return b[Math.floor(x/10)]+(x%10?" "+a[x%10]:"");
+    if(x<1000)return a[Math.floor(x/100)]+" Hundred"+(x%100?" and "+c(x%100):"");
+    return c(Math.floor(x/1000))+" Thousand"+(x%1000?" "+c(x%1000):"");
+  }
   return(c(Math.floor(n))||"Zero")+" Rupees Only";
 };
 
@@ -1382,5 +1388,3 @@ export default function Root(){
   if(screen==="app")return<BizBook shopInfo={shopInfo} onLogout={logout}/>;
   return null;
 }
-/ /  
- 
